@@ -113,7 +113,7 @@ MainWindow::MainWindow(QWidget *parent)
 	, ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
-	setWindowTitle("VTK Course - 2 Cone&Outline");
+	setWindowTitle("VTK Course 2 - Cone and Outline");
 
 	//step 0: set it to a window:
 	auto vw = new  QVTKOpenGLWidget(this) ;
