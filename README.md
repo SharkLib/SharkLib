@@ -3,7 +3,6 @@ I want share my experience to every one who want to learn
  - Qt
  - VTK
  - Python
- - Flutter
  
 It includes 4 parts, one is the basic knowledge of Qt, and another is how to use VTK in Qt.
 
@@ -32,8 +31,3 @@ In Python course, I will teach how to implement VTK in 21 Days step by step..
  - Course One - Setup your computer.
  - Course Two - The first Python program
  
- 
- In Flutter course, I will teach how to implement VTK in 21 Days step by step.. 
-
- - Course One - Setup your computer.
- - Course Two - The first Fkutter Application
