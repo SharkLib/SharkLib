@@ -1,6 +1,11 @@
 # SharkLib
-I want share my experience to every one who want to learn Qt.
-It includes two parts, one is the basic knowledge of Qt, and another is how to use VTK in Qt.
+I want share my experience to every one who want to learn
+ - Qt
+ - VTK
+ - Python
+ - Flutter
+ 
+It includes 4 parts, one is the basic knowledge of Qt, and another is how to use VTK in Qt.
 
 [Qt](https://en.wikipedia.org/wiki/Qt_(software)) is a great liabrary to implement C++ software cross platform, once you finished your implement, you are ability to compile application for Windows, Mac, Linux, even Android and iOS.
 
