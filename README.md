@@ -12,13 +12,12 @@ It includes two parts, one is the basic knowledge of Qt, and another is how to u
 
 In this course, I will teach how to Learn Qt in 21 Days step by step.. 
 
- - Course One
- 
- - Course Two
+ - Course One - 
+  Setup your computer.
+ - Course Two - The first Qt Widget Application
 
 
 In this course, I will teach how to implement VTK in 21 Days step by step.. 
 
- - Course One
- 
- - Course Two
+ - Course One - Setup your computer.
+ - Course Two - The first VTK Application
