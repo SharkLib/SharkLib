@@ -15,14 +15,25 @@ It includes 4 parts, one is the basic knowledge of Qt, and another is how to use
 
 <img src="pic/vtk-all.gif">
 
-In this course, I will teach how to Learn Qt in 21 Days step by step.. 
+In Qt course, I will teach how to Learn Qt in 21 Days step by step.. 
 
  - Course One - 
   Setup your computer.
  - Course Two - The first Qt Widget Application
 
 
-In this course, I will teach how to implement VTK in 21 Days step by step.. 
+In VTK course, I will teach how to implement VTK in 21 Days step by step.. 
 
  - Course One - Setup your computer.
  - Course Two - The first VTK Application
+
+In Python course, I will teach how to implement VTK in 21 Days step by step.. 
+
+ - Course One - Setup your computer.
+ - Course Two - The first Python program
+ 
+ 
+ In Flutter course, I will teach how to implement VTK in 21 Days step by step.. 
+
+ - Course One - Setup your computer.
+ - Course Two - The first Fkutter Application
