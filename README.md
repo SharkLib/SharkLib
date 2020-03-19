@@ -16,9 +16,29 @@ It includes 4 parts, one is the basic knowledge of Qt, and another is how to use
 
 In Qt course, I will teach how to Learn Qt in 21 Days step by step.. 
 
- - Course One - 
-  Setup your computer.
- - Course Two - The first Qt Widget Application
+ - Course One - Setup your computer.
+   Now Qt has binary version, it is easy to insall Qt to windows, Mac and Linux. 
+   - 1 Download [Qt](qt.io) choose the right version.
+   - 2 Open the binary file and fellow the steps.
+   - 3 If want to intergrate it with VS, please download the qt_plugin for VS.
+   
+ - Course Two - [A Dialog Application]()
+  - Open Qt Create, choose "New Project" from "File" menu.
+  - In first step, choose Application -> Qt Widgets Application
+  - In 3rd step, change base class from QMainWindow to QDialog.
+  - After Done, click Run button.
+  Now you get one dialog application:
+  <img src="pic/dialog.png" width="200" height="100">
+  
+  - Course 3 - [MainWidow Application]()
+    - Open Qt Create, choose "New Project" from "File" menu.
+  - In first step, choose Application -> Qt Widgets Application
+  - In 3rd step, change base class from QMainWindow to QDialog.
+  - After Done, click Run button.
+  Now you get one dialog application:
+  <img src="pic/dialog.png" width="200" height="100">
+ 
+ 
  - Course [Draw Sharp](https://github.com/SharkLib/SharkLib/tree/master/Qt/CustomDraw)
  
  
@@ -29,7 +49,9 @@ In Qt course, I will teach how to Learn Qt in 21 Days step by step..
 
 In VTK course, I will teach how to implement VTK in 21 Days step by step.. 
 
- - Course One - Setup your computer.
+ - Course One - [Setup your computer.](https://sharklib.github.io/vtk/2020/01/01/vtk-course1.html)
+
+  
  - Course Two - [The first VTK Application](https://sharklib.github.io/vtk/2020/01/02/vtk-course2.html) - 
  [Source Code](https://github.com/SharkLib/SharkLib/tree/master/VTK/Course1)
  <img src= "https://sharklib.github.io/assets/img/course1.png" width="200" height="200">
