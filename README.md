@@ -28,15 +28,17 @@ In Qt course, I will teach how to Learn Qt in 21 Days step by step..
   - In 3rd step, change base class from QMainWindow to QDialog.
   - After Done, click Run button.
   Now you get one dialog application:
-  <img src="pic/dialog.png" width="200" height="100">
+  If you want to change the GUI, using Qt Designer or the Qt Creator, you can add/delete/modify your UI as other IDE.
+  <img src="pic/dialog.png" width="300" height="160">
   
   - Course 3 - [MainWidow Application]()
     - Open Qt Create, choose "New Project" from "File" menu.
   - In first step, choose Application -> Qt Widgets Application
-  - In 3rd step, change base class from QMainWindow to QDialog.
+  - In 3rd step, Not change Anything only the class name.
   - After Done, click Run button.
   Now you get one dialog application:
-  <img src="pic/dialog.png" width="200" height="100">
+    If you want to change the GUI, using Qt Designer or the Qt Creator, you can add/delete/modify your UI as other IDE.
+  <img src="pic/mainwindow.png" width="300" height="160">
  
  
  - Course [Draw Sharp](https://github.com/SharkLib/SharkLib/tree/master/Qt/CustomDraw)
