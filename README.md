@@ -24,7 +24,7 @@ In Qt course, I will teach how to Learn Qt in 21 Days step by step..
  
   | <img src= "https://github.com/SharkLib/SharkLib/blob/master/pic/ezgif-6-ae31d077be26.gif" width="200" height="200">
   |<img src= "https://github.com/SharkLib/SharkLib/blob/master/pic/ezgif-6-3507fba6bb60.gif" width="200" height="200">
-|<img src= "https://github.com/SharkLib/SharkLib/blob/master/pic/ezgif-6-10fd5057a811.gif" width="200" height="200">|
+|<img src= "https://github.com/SharkLib/SharkLib/blob/master/pic/ezgif-6-668a6bd0c468.gif" width="200" height="200">|
 
 
 In VTK course, I will teach how to implement VTK in 21 Days step by step.. 
