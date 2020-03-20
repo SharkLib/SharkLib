@@ -38,6 +38,12 @@ In Qt course, I will teach how to Learn Qt in 21 Days step by step..
   Now you get one dialog application:
   <img src="pic/dialog.png" width="200" height="100">
  
+ - Course 4 - [Custom MainWidow]()
+  - 1 Add menu
+  - 2 Add Status Bar
+  - 3 Add ToolBar
+  - 4 Using Dock widget
+
  
  - Course [Draw Sharp](https://github.com/SharkLib/SharkLib/tree/master/Qt/CustomDraw)
  
@@ -52,18 +58,25 @@ In VTK course, I will teach how to implement VTK in 21 Days step by step..
  - Course One - [Setup your computer.](https://sharklib.github.io/vtk/2020/01/01/vtk-course1.html)
 
   
- - Course Two - [The first VTK Application](https://sharklib.github.io/vtk/2020/01/02/vtk-course2.html) - 
+ - Course Two - [Cone Application](https://sharklib.github.io/vtk/2020/01/02/vtk-course2.html) - 
  [Source Code](https://github.com/SharkLib/SharkLib/tree/master/VTK/Course1)
  <img src= "https://sharklib.github.io/assets/img/course1.png" width="200" height="200">
 
- - Course 3 - [The 2nd VTK Application](https://sharklib.github.io/vtk/2020/01/03/vtk-course3.html) - [Source Code](https://github.com/SharkLib/SharkLib/tree/master/VTK/Course2)
+ - Course 3 - [Cone_Outline Application](https://sharklib.github.io/vtk/2020/01/03/vtk-course3.html) - [Source Code](https://github.com/SharkLib/SharkLib/tree/master/VTK/Course2)
  <img src= "https://sharklib.github.io/assets/img/couse2.png" width="200" height="200">
  
  
- - Course 4 - [The 3rd VTK Application](https://sharklib.github.io/vtk/2020/01/04/vtk-course4.html) - [Source Code](https://github.com/SharkLib/SharkLib/tree/master/VTK/Course3)
+ - Course 4 - [Cone_Axis Application](https://sharklib.github.io/vtk/2020/01/04/vtk-course4.html) - [Source Code](https://github.com/SharkLib/SharkLib/tree/master/VTK/Course3)
  <img src= "https://sharklib.github.io/assets/img/couse3.png" width="200" height="200">
  
+
+  - Course 5 - [Cone_Box Application](https://sharklib.github.io/vtk/2020/01/04/vtk-course5.html) - [Source Code](https://github.com/SharkLib/SharkLib/tree/master/VTK/Course4)
+ <img src= "https://sharklib.github.io/assets/img/couse4.png" width="200" height="200">
  
+
+
+  - Course 6 - [Cube Application - Custom data](https://sharklib.github.io/vtk/2020/01/04/vtk-course6.html) - [Source Code](https://github.com/SharkLib/SharkLib/tree/master/VTK/Course4)
+ <img src= "https://sharklib.github.io/assets/img/couse5.png" width="200" height="200">
 In Python course, I will teach how to implement VTK in 21 Days step by step.. 
 
  - Course One - Setup your computer.
