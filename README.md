@@ -84,6 +84,9 @@ In VTK course, I will teach how to implement VTK in 21 Days step by step..
   - Course 6 - [Cube Application - Texture](https://sharklib.github.io/vtk/2020/01/04/vtk-course7.html) - [Source Code](https://github.com/SharkLib/SharkLib/tree/master/VTK/Course6)
  <img src= "https://sharklib.github.io/assets/img/course6.png" width="200" height="200">
 
+ - Course 7 - [Multiple Objects](https://sharklib.github.io/vtk/2020/01/04/vtk-course7.html) - [Source Code](https://github.com/SharkLib/SharkLib/tree/master/VTK/Course6)
+ <img src= "https://sharklib.github.io/assets/img/course7.png" width="200" height="200">
+
 In Python course, I will teach how to implement VTK in 21 Days step by step.. 
 
  - Course One - Setup your computer.
