@@ -41,12 +41,151 @@ public:
   }
 };
 
+#define NFACE 6
+#define NLINE 4
+#define M_GET_LENGTH3D(x, y, z)			sqrt((double)((x)*(x) + (y)*(y) + (z)*(z)))
+
+//---------------------------------------------------------
+ struct VTKPoint3D
+{
+	double	m_x, m_y, m_z;
+	VTKPoint3D()
+	{
+		m_x = 0;
+		m_y = 0;
+		m_z = 0;
+	}
+	VTKPoint3D(double x1, double y1, double z1)
+	{
+		m_x = x1;
+		m_y = y1;
+		m_z= z1;
+	}
+};
+
+vtkSmartPointer<vtkActor> createCubeerrr()
+{
+	double p[6] = {0,1,0,1,0,1};
+	//获取当前坐标范围的中心点
+	//m_vtkView->getCoordRange(p);
+	double centerx = (p[0] + p[1]) / 2;
+	double centery = (p[2] + p[3]) / 2;
+	double centerz = (p[4] + p[5]) / 2;
+	double cube_size = 1.0;
+	//构造立方体
+	std::list< VTKPoint3D > m_pts;
+
+	m_pts.clear();
+	m_pts.push_back(VTKPoint3D(centerx - cube_size / 2, centery - cube_size / 2, centerz - cube_size / 2));
+	m_pts.push_back(VTKPoint3D(centerx + cube_size / 2, centery - cube_size / 2, centerz - cube_size / 2));
+	m_pts.push_back(VTKPoint3D(centerx + cube_size / 2, centery + cube_size / 2, centerz - cube_size / 2));
+	m_pts.push_back(VTKPoint3D(centerx - cube_size / 2, centery + cube_size / 2, centerz - cube_size / 2));
+	m_pts.push_back(VTKPoint3D(centerx - cube_size / 2, centery - cube_size / 2, centerz + cube_size / 2));
+	m_pts.push_back(VTKPoint3D(centerx + cube_size / 2, centery - cube_size / 2, centerz + cube_size / 2));
+	m_pts.push_back(VTKPoint3D(centerx + cube_size / 2, centery + cube_size / 2, centerz + cube_size / 2));
+	m_pts.push_back(VTKPoint3D(centerx - cube_size / 2, centery + cube_size / 2, centerz + cube_size / 2));
+	// The ordering of the corner points on each face.
+	std::array<std::array<vtkIdType, 4>, 6> ordering =
+	{ {
+	{ { 0, 1, 2, 3 } },
+	{ { 4, 5, 6, 7 } },
+	{ { 0, 1, 5, 4 } },
+	{ { 1, 2, 6, 5 } },
+	{ { 2, 3, 7, 6 } },
+	{ { 3, 0, 4, 7 } } } };
+	//
+	vtkSmartPointer<vtkPoints> points = vtkSmartPointer<vtkPoints>::New();
+	vtkSmartPointer<vtkCellArray> polys = vtkSmartPointer<vtkCellArray>::New();
+	VTKPoint3D pt;
+	auto ppp = m_pts.begin();
+	for (int index = 0; index < 8; ++index)
+	{
+
+		points->InsertPoint(index, ppp->m_x, ppp->m_y,ppp->m_z);
+		ppp++;
+	}
+	for (auto&& i : ordering)
+	{
+		polys->InsertNextCell(vtkIdType(i.size()), i.data());
+	}
+	//将点和多边形加入polydata
+	vtkIdType* indices;
+	vtkIdType numberOfPoints;
+	VTKPoint3D pt0, pt1, pt2;
+	vtkSmartPointer<vtkAppendPolyData> polyDatas = vtkSmartPointer<vtkAppendPolyData>::New();
+
+	for (polys->InitTraversal();polys->GetNextCell(numberOfPoints, indices);)
+	{
+		vtkSmartPointer<vtkPolyData> profile = vtkSmartPointer<vtkPolyData>::New();
+		vtkSmartPointer<vtkCellArray> lines = vtkSmartPointer<vtkCellArray>::New();
+		lines->InsertNextCell(numberOfPoints);
+		for (vtkIdType i = 0; i < numberOfPoints; i++)
+		{
+			vtkIdType id = indices[i];
+			lines->InsertCellPoint(id);
+			double point[3];
+			points->GetPoint(id, point);
+			if (i == 0)
+			{
+				pt0.m_x = point[0];pt0.m_y = point[1];pt0.m_z = point[2];
+			}
+			if (i == 1)
+			{
+				pt1.m_x = point[0];pt1.m_y = point[1];pt1.m_z = point[2];
+			}
+			if (i == 2)
+			{
+				pt2.m_x = point[0];pt2.m_y = point[1];pt2.m_z = point[2];
+			}
+		}
+		profile->SetPoints(points);
+		profile->SetPolys(lines);
+		////计算多边形的法向量
+		vtkSmartPointer<vtkPolyDataNormals> normal = vtkSmartPointer<vtkPolyDataNormals>::New();
+		normal->SetInputData(profile);
+		////设置多边形纹理映射的模式
+		////设置为plane模式
+		vtkSmartPointer<vtkTextureMapToPlane> tmapper = vtkSmartPointer<vtkTextureMapToPlane>::New();
+		tmapper->SetInputConnection(normal->GetOutputPort());
+		//设置纹理st坐标系的顶点坐标 和两点坐标，定义了st坐标系
+		tmapper->SetOrigin(pt1.m_x, pt1.m_y, pt1.m_z);
+		tmapper->SetPoint1(pt0.m_x, pt0.m_y, pt0.m_z);
+		tmapper->SetPoint2(pt2.m_x, pt2.m_y, pt2.m_z);
+		vtkSmartPointer<vtkTransformTextureCoords> xform = vtkSmartPointer<vtkTransformTextureCoords>::New();
+		xform->SetInputConnection(tmapper->GetOutputPort());
+		xform->SetScale(1, 1, 1);
+		polyDatas->AddInputConnection(xform->GetOutputPort());
+	}
+	polyDatas->Update();
+	vtkSmartPointer<vtkPolyDataMapper> cubeMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+	cubeMapper->SetInputConnection(polyDatas->GetOutputPort());
+	vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
+	actor->SetMapper(cubeMapper);
+
+
+	// Read JPG image
+	vtkSmartPointer<vtkJPEGReader> JPEGReader = vtkSmartPointer<vtkJPEGReader>::New();
+	JPEGReader->SetFileName("/Users/rong/work/bb.jpeg");
+	JPEGReader->Update();
+
+
+
+
+	auto texture = vtkSmartPointer<vtkTexture>::New();
+	texture->SetInputConnection(JPEGReader->GetOutputPort());
+	texture->InterpolateOn();
+
+	actor->SetTexture(texture);
+	return actor;
+
+}
+
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
 	, ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
-	setWindowTitle("VTK 8  - Multi-Object");
+	setWindowTitle("VTK 7  - Multi-Object");
 
 	//step 0: set it to a window:
 	auto vw = new  QVTKOpenGLWidget(this) ;
@@ -82,15 +221,11 @@ MainWindow::MainWindow(QWidget *parent)
 	ass->SetOrigin(0,0,0);
 	render->AddActor(ass);
 
-	//render->AddActor( createCubeerrr());
+	render->AddActor( createCubeerrr());
 
 	//setBodyTexture();
 	setHeadTexture();
 	hand_left.setTexture("/Users/rong/work/bb.jpeg");
-	hand_right.setTexture("/Users/rong/work/bb.jpeg");
-	foot_left.setTexture("/Users/rong/work/bb.jpeg");
-	foot_right.setTexture("/Users/rong/work/bb.jpeg");
-
 	body.setTexture("/Users/rong/dfnet/suit.jpg");
 
 
@@ -675,7 +810,7 @@ void MainWindow::setHeadTexture()
 {
 	// Read JPG image
 	vtkSmartPointer<vtkJPEGReader> JPEGReader = vtkSmartPointer<vtkJPEGReader>::New();
-	JPEGReader->SetFileName("/Users/rong/dfnet/head.jpg");
+	JPEGReader->SetFileName("/Users/rong/work/bb.jpeg");
 	JPEGReader->Update();
 
 	vtkSmartPointer<vtkTexture> texture1 = vtkSmartPointer<vtkTexture>::New();
