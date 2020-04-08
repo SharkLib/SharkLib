@@ -86,8 +86,6 @@
 #include <vtkSphere.h>
 #include <vtkTransform.h>
 #include <vtkContourFilter.h>
-#include <vtkTransformTextureCoords.h>
-#include "vtkobject.h"
 
 VTK_MODULE_INIT(vtkRenderingOpenGL2)
 VTK_MODULE_INIT(vtkInteractionStyle);
@@ -121,15 +119,6 @@ public:
 
 	void createTexture();
 
-	void rotateHand(MyVTKObject<vtkSmartPointer<vtkCylinderSource>> obj, float angle, int x, int y , int z,float mx, float my, float mz);
-
-
-	void createCube();
-	void textureToCube();
-
-	void setBodyTexture();
-	void setHeadTexture();
-	void setCylinderTexture(MyVTKObject<vtkSmartPointer<vtkCylinderSource>> obj);
 
 
 private slots:
@@ -141,38 +130,13 @@ private slots:
 
 	void on_actionMX2_triggered();
 
-	void on_mv_valueChanged(int value);
-	void on_rotate_valueChanged(int value);
-
-	void on_btn1_clicked();
-
-	void on_btn2_clicked();
-
-	void on_btn3_clicked();
-
-	void on_btn4_clicked();
-
-	void on_btn9_clicked();
-
 private:
 	Ui::MainWindow *ui;
 
 	vtkRenderWindow *renWin;
 	vtkRenderer *render;
 	vtkSmartPointer<vtkTexture> texture ;
-	vtkSmartPointer<vtkTransformTextureCoords> transformTexture;
 	QVector< vtkSmartPointer<vtkAssembly>> ltAssembly;
 	QComboBox * comBox;
-
-	MyVTKObject<vtkSmartPointer<vtkSphereSource>> header;
-
-	MyVTKObject<vtkSmartPointer<vtkCubeSource>> body;
-	MyVTKObject<vtkSmartPointer<vtkCylinderSource>> hand_left;
-	MyVTKObject<vtkSmartPointer<vtkCylinderSource>> hand_right;
-	MyVTKObject<vtkSmartPointer<vtkCylinderSource>> foot_left;
-	MyVTKObject<vtkSmartPointer<vtkCylinderSource>> foot_right;
-
-
-
 };
 #endif // MAINWINDOW_H

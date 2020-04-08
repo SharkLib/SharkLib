@@ -10,20 +10,7 @@
 #include <vtkDoubleArray.h>
 #include <vtkFloatArray.h>
 #include <vtkMath.h>
-#include <QGridLayout>
-#include <vtkJPEGReader.h>
-#include <vtkImageActor.h>
-#include <vtkImageMapper3D.h>
-#include <vtkTextureMapToPlane.h>
-#include <vtkUnstructuredGrid.h>
-#include <vtkAppendPolyData.h>
-#include <vtkCubeAxesActor2D.h>
-#include <vtkPolyDataNormals.h>
 
-#include <iterator>
-#include <iostream>
-#include <algorithm>
-#include <array>
 
 
 class vtkMyCallback : public vtkCommand
@@ -41,144 +28,6 @@ public:
   }
 };
 
-#define NFACE 6
-#define NLINE 4
-#define M_GET_LENGTH3D(x, y, z)			sqrt((double)((x)*(x) + (y)*(y) + (z)*(z)))
-
-//---------------------------------------------------------
- struct VTKPoint3D
-{
-	double	m_x, m_y, m_z;
-	VTKPoint3D()
-	{
-		m_x = 0;
-		m_y = 0;
-		m_z = 0;
-	}
-	VTKPoint3D(double x1, double y1, double z1)
-	{
-		m_x = x1;
-		m_y = y1;
-		m_z= z1;
-	}
-};
-
-vtkSmartPointer<vtkActor> createCubeerrr()
-{
-	double p[6] = {0,1,0,1,0,1};
-	//获取当前坐标范围的中心点
-	//m_vtkView->getCoordRange(p);
-	double centerx = (p[0] + p[1]) / 2;
-	double centery = (p[2] + p[3]) / 2;
-	double centerz = (p[4] + p[5]) / 2;
-	double cube_size = 1.0;
-	//构造立方体
-	std::list< VTKPoint3D > m_pts;
-
-	m_pts.clear();
-	m_pts.push_back(VTKPoint3D(centerx - cube_size / 2, centery - cube_size / 2, centerz - cube_size / 2));
-	m_pts.push_back(VTKPoint3D(centerx + cube_size / 2, centery - cube_size / 2, centerz - cube_size / 2));
-	m_pts.push_back(VTKPoint3D(centerx + cube_size / 2, centery + cube_size / 2, centerz - cube_size / 2));
-	m_pts.push_back(VTKPoint3D(centerx - cube_size / 2, centery + cube_size / 2, centerz - cube_size / 2));
-	m_pts.push_back(VTKPoint3D(centerx - cube_size / 2, centery - cube_size / 2, centerz + cube_size / 2));
-	m_pts.push_back(VTKPoint3D(centerx + cube_size / 2, centery - cube_size / 2, centerz + cube_size / 2));
-	m_pts.push_back(VTKPoint3D(centerx + cube_size / 2, centery + cube_size / 2, centerz + cube_size / 2));
-	m_pts.push_back(VTKPoint3D(centerx - cube_size / 2, centery + cube_size / 2, centerz + cube_size / 2));
-	// The ordering of the corner points on each face.
-	std::array<std::array<vtkIdType, 4>, 6> ordering =
-	{ {
-	{ { 0, 1, 2, 3 } },
-	{ { 4, 5, 6, 7 } },
-	{ { 0, 1, 5, 4 } },
-	{ { 1, 2, 6, 5 } },
-	{ { 2, 3, 7, 6 } },
-	{ { 3, 0, 4, 7 } } } };
-	//
-	vtkSmartPointer<vtkPoints> points = vtkSmartPointer<vtkPoints>::New();
-	vtkSmartPointer<vtkCellArray> polys = vtkSmartPointer<vtkCellArray>::New();
-	VTKPoint3D pt;
-	auto ppp = m_pts.begin();
-	for (int index = 0; index < 8; ++index)
-	{
-
-		points->InsertPoint(index, ppp->m_x, ppp->m_y,ppp->m_z);
-		ppp++;
-	}
-	for (auto&& i : ordering)
-	{
-		polys->InsertNextCell(vtkIdType(i.size()), i.data());
-	}
-	//将点和多边形加入polydata
-	vtkIdType* indices;
-	vtkIdType numberOfPoints;
-	VTKPoint3D pt0, pt1, pt2;
-	vtkSmartPointer<vtkAppendPolyData> polyDatas = vtkSmartPointer<vtkAppendPolyData>::New();
-
-	for (polys->InitTraversal();polys->GetNextCell(numberOfPoints, indices);)
-	{
-		vtkSmartPointer<vtkPolyData> profile = vtkSmartPointer<vtkPolyData>::New();
-		vtkSmartPointer<vtkCellArray> lines = vtkSmartPointer<vtkCellArray>::New();
-		lines->InsertNextCell(numberOfPoints);
-		for (vtkIdType i = 0; i < numberOfPoints; i++)
-		{
-			vtkIdType id = indices[i];
-			lines->InsertCellPoint(id);
-			double point[3];
-			points->GetPoint(id, point);
-			if (i == 0)
-			{
-				pt0.m_x = point[0];pt0.m_y = point[1];pt0.m_z = point[2];
-			}
-			if (i == 1)
-			{
-				pt1.m_x = point[0];pt1.m_y = point[1];pt1.m_z = point[2];
-			}
-			if (i == 2)
-			{
-				pt2.m_x = point[0];pt2.m_y = point[1];pt2.m_z = point[2];
-			}
-		}
-		profile->SetPoints(points);
-		profile->SetPolys(lines);
-		////计算多边形的法向量
-		vtkSmartPointer<vtkPolyDataNormals> normal = vtkSmartPointer<vtkPolyDataNormals>::New();
-		normal->SetInputData(profile);
-		////设置多边形纹理映射的模式
-		////设置为plane模式
-		vtkSmartPointer<vtkTextureMapToPlane> tmapper = vtkSmartPointer<vtkTextureMapToPlane>::New();
-		tmapper->SetInputConnection(normal->GetOutputPort());
-		//设置纹理st坐标系的顶点坐标 和两点坐标，定义了st坐标系
-		tmapper->SetOrigin(pt1.m_x, pt1.m_y, pt1.m_z);
-		tmapper->SetPoint1(pt0.m_x, pt0.m_y, pt0.m_z);
-		tmapper->SetPoint2(pt2.m_x, pt2.m_y, pt2.m_z);
-		vtkSmartPointer<vtkTransformTextureCoords> xform = vtkSmartPointer<vtkTransformTextureCoords>::New();
-		xform->SetInputConnection(tmapper->GetOutputPort());
-		xform->SetScale(1, 1, 1);
-		polyDatas->AddInputConnection(xform->GetOutputPort());
-	}
-	polyDatas->Update();
-	vtkSmartPointer<vtkPolyDataMapper> cubeMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
-	cubeMapper->SetInputConnection(polyDatas->GetOutputPort());
-	vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
-	actor->SetMapper(cubeMapper);
-
-
-	// Read JPG image
-	vtkSmartPointer<vtkJPEGReader> JPEGReader = vtkSmartPointer<vtkJPEGReader>::New();
-	JPEGReader->SetFileName("/Users/rong/work/bb.jpeg");
-	JPEGReader->Update();
-
-
-
-
-	auto texture = vtkSmartPointer<vtkTexture>::New();
-	texture->SetInputConnection(JPEGReader->GetOutputPort());
-	texture->InterpolateOn();
-
-	actor->SetTexture(texture);
-	return actor;
-
-}
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
@@ -197,54 +46,33 @@ MainWindow::MainWindow(QWidget *parent)
 
 	render->SetBackground( 0.1, 0.2, 0.4 );
 
-	createTexture();
-	//createAxis();
-	createHead();
-	createBody();
-	createHand(0,0,0,0);
+	createAxis();
+
 
 	vtkSmartPointer<vtkAssembly> ass = vtkSmartPointer<vtkAssembly>::New() ;
+	for (int n = 0; n < 3; ++n)
+	{
+		auto act1 = createCylinder(n*2,0,0);
+		auto act2 = createCylinder(n*2,2,0,0,0,0,0);
+		auto act3 = createCylinder(n*2,4,0);
 
-	ltAssembly << ass;
 
-	ass->AddPart(header.getActor());//this can be multiple
-	ass->AddPart(body.getActor());//this can be multiple
 
-	//cubeActor->SetTexture(texture);
-	ass->AddPart(hand_left.getActor());//this can be multiple
-	ass->AddPart(hand_right.getActor());//this can be multiple
-	ass->AddPart(foot_left.getActor());//this can be multiple
-	ass->AddPart(foot_right.getActor());//this can be multiple
+		ltAssembly << ass;
+		auto c = act2->GetCenter();
+		ass->AddPart(act2);
+		ass->SetOrigin(c[0],c[1],c[2]);
 
-	rotateHand(hand_left,30,1,0,0, 0.2,-0.2,0);
-	rotateHand(hand_right,-30,0,0,0, -0.1,-0.2,0);
-	ass->SetOrigin(0,0,0);
+
+	}
 	render->AddActor(ass);
 
-	render->AddActor( createCubeerrr());
 
-	//setBodyTexture();
-	setHeadTexture();
-	hand_left.setTexture("/Users/rong/work/bb.jpeg");
-	body.setTexture("/Users/rong/dfnet/suit.jpg");
-
-
-	//绘制
-	   vtkCamera *camera = vtkCamera::New();
-	  camera->SetPosition(1,1,20);
-	  camera->SetFocalPoint(0,0,0);
-
-	render->SetActiveCamera(camera);
 
 	renWin->AddRenderer( render );
 
 
-	//setCentralWidget(vw);
-	QGridLayout * layout1 = new QGridLayout(this);
-	vw->setSizePolicy( QSizePolicy::Expanding,QSizePolicy::Expanding);
-	layout1->addWidget(vw,0,0);
-	ui->frame->setLayout(layout1);
-
+	setCentralWidget(vw);
 
 	comBox = new QComboBox(this);
 	QStringList lt;
@@ -254,13 +82,6 @@ MainWindow::MainWindow(QWidget *parent)
 	ui->toolBar->addWidget(comBox);
 
 
-	connect(ui->horizontalSlider_2,&QSlider::valueChanged, this, &MainWindow::on_mv_valueChanged);
-	connect(ui->horizontalSlider_3,&QSlider::valueChanged, this, &MainWindow::on_mv_valueChanged);
-	connect(ui->horizontalSlider,&QSlider::valueChanged, this, &MainWindow::on_mv_valueChanged);
-
-	connect(ui->verticalSlider,&QSlider::valueChanged, this, &MainWindow::on_rotate_valueChanged);
-	connect(ui->verticalSlider_2,&QSlider::valueChanged, this, &MainWindow::on_rotate_valueChanged);
-	connect(ui->verticalSlider_3,&QSlider::valueChanged, this, &MainWindow::on_rotate_valueChanged);
 
 }
 
@@ -272,112 +93,112 @@ MainWindow::~MainWindow()
 vtkSmartPointer<vtkActor> MainWindow::createHead()
 {
 
-	vtkSmartPointer<vtkSphereSource> coneSource = vtkSmartPointer<vtkSphereSource>::New();
+	vtkSmartPointer<vtkConeSource> coneSource = vtkSmartPointer<vtkConeSource>::New();
 	coneSource->SetRadius(1);
-	//coneSource->SetHeight(2);
-	coneSource->SetCenter(0, 3, 0);
+	coneSource->SetHeight(2);
+	coneSource->SetCenter(0, 0, 0);
 
-	header.setSource( coneSource);
+	vtkSmartPointer<vtkTransform> transform = vtkSmartPointer<vtkTransform>::New();
+	  //transform->RotateWXYZ(double angle, double x, double y, double z);
+	 // transform->RotateWXYZ(80, 0, 0, 1);
 
-	//render->AddActor(header.getActor());
-	return header.getActor();
+	  transform->Translate(0,-1.3,0);
+	  transform->RotateWXYZ(90, 0, 0, 1);
+	  vtkSmartPointer<vtkTransformPolyDataFilter> transformFilter =
+			vtkSmartPointer<vtkTransformPolyDataFilter>::New();
+
+		transformFilter->SetTransform(transform);
+		transformFilter->SetInputConnection(coneSource->GetOutputPort());
+		transformFilter->Update();
+
+	vtkSmartPointer<vtkPolyDataMapper> coneMapper =
+			vtkSmartPointer<vtkPolyDataMapper>::New();
+	coneMapper->SetInputConnection(coneSource->GetOutputPort());
+	vtkSmartPointer<vtkActor> coneActor =
+			vtkSmartPointer<vtkActor>::New();
+	coneActor->SetMapper(coneMapper);
+
+	coneActor->SetUserTransform(transform);
+
+	render->AddActor(coneActor);
+	return coneActor;
 }
 
 vtkSmartPointer<vtkActor> MainWindow::createBody()
 {
-	vtkSmartPointer<vtkCubeSource> cubeSource = vtkSmartPointer<vtkCubeSource>::New();
+	int i;
+	//定义点在三维坐标系中的坐标
+	static float x[8][3]={{0,0,0,},{1,0,0},{-1,-1,0},{0,-1,0},{0,0,1},{1,0,1},{1,1,1},{0,1,1}};
 
-	cubeSource->SetCenter(0,1,0);
-	cubeSource->SetXLength(2);
-	cubeSource->SetYLength(2.5);
-	cubeSource->SetZLength(1);
-	body.setSource(cubeSource);
-	//render->AddActor(body.getActor());
-	return body.getActor();
+	vtkPolyData *cube=vtkPolyData::New();//创建数据集对象的实例
+	vtkPoints *points=vtkPoints ::New();//创建vtkPoints对象的实例
+
+	for(i=0;i<8;i++)points->InsertPoint(i,x[i]);//将点坐标插入vtkPoints对象中
+
+	cube->SetPoints(points);//为数据集添加点，定义其几何
+
+	vtkSmartPointer<vtkCubeSource> cubeSource = vtkSmartPointer<vtkCubeSource>::New();
+	cubeSource->SetInputData(cube);
+
+
+	vtkSmartPointer<vtkPolyDataMapper> cubeMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+	cubeMapper->SetInputConnection(cubeSource->GetOutputPort());
+	vtkSmartPointer<vtkActor> cubeActor = vtkSmartPointer<vtkActor>::New();
+	cubeActor->SetMapper(cubeMapper);
+
+	render->AddActor(cubeActor);
+
+
+	return cubeActor;
 }
 
 vtkSmartPointer<vtkActor> MainWindow::createHand(float x,float y,float z,float angle)
 {
-	vtkSmartPointer<vtkCylinderSource> cylindeSourceLeft = vtkSmartPointer<vtkCylinderSource>:: New();
-	cylindeSourceLeft->SetCenter(2,1,0);
-	cylindeSourceLeft->SetHeight(1);
-	cylindeSourceLeft->SetRadius(0.3);
+	vtkSmartPointer<vtkCylinderSource> cylindeSource = vtkSmartPointer<vtkCylinderSource>:: New();
+	cylindeSource->SetCenter(0,0,0);
+	cylindeSource->SetHeight(1);
+	cylindeSource->SetRadius(0.1);
 
-	hand_left.setSource(cylindeSourceLeft);
+	vtkSmartPointer<vtkPolyDataMapper> dataMap = vtkSmartPointer<vtkPolyDataMapper>::New();
 
-	//render->AddActor(hand_left.getActor());
+	dataMap->SetInputConnection( cylindeSource->GetOutputPort());
 
+	vtkSmartPointer<vtkActor> act = vtkSmartPointer<vtkActor>::New();
+	act->SetMapper(dataMap);
 
-	vtkSmartPointer<vtkCylinderSource> cylindeSourceRight = vtkSmartPointer<vtkCylinderSource>:: New();
-	cylindeSourceRight->SetCenter(-2,1,0);
-	cylindeSourceRight->SetHeight(1);
-	cylindeSourceRight->SetRadius(0.3);
+	vtkSmartPointer<vtkTransform> transform = vtkSmartPointer<vtkTransform>::New();
+	//transform->RotateWXYZ(double angle, double x, double y, double z);
+	transform->RotateWXYZ(angle, 0, 0, 1);
 
-	hand_right.setSource(cylindeSourceRight);
+	transform->Translate(x,y,z);
+	// transform->RotateWXYZ(90, 0, 0, 1);
+	vtkSmartPointer<vtkTransformPolyDataFilter> transformFilter =
+			vtkSmartPointer<vtkTransformPolyDataFilter>::New();
 
-	//render->AddActor(hand_right.getActor());
+	transformFilter->SetTransform(transform);
+	transformFilter->SetInputConnection(cylindeSource->GetOutputPort());
+	transformFilter->Update();
 
-	vtkSmartPointer<vtkCylinderSource> cylindeSourceFL = vtkSmartPointer<vtkCylinderSource>:: New();
-	cylindeSourceFL->SetCenter(-0.6,-1,0);
-	cylindeSourceFL->SetHeight(1);
-	cylindeSourceFL->SetRadius(0.3);
+	act->SetUserTransform(transform);
 
-	foot_left.setSource(cylindeSourceFL);
-
-	//render->AddActor(foot_left.getActor());
-
-
-	vtkSmartPointer<vtkCylinderSource> cylindeSourceFR = vtkSmartPointer<vtkCylinderSource>:: New();
-	cylindeSourceFR->SetCenter(0.6,-1,0);
-	cylindeSourceFR->SetHeight(1);
-	cylindeSourceFR->SetRadius(0.3);
-
-	foot_right.setSource(cylindeSourceFR);
-
-	//render->AddActor(foot_right.getActor());
-
-	return hand_left.getActor();
-
-//	vtkSmartPointer<vtkPolyDataMapper> dataMap = vtkSmartPointer<vtkPolyDataMapper>::New();
-
-//	dataMap->SetInputConnection( cylindeSource->GetOutputPort());
-
-//	vtkSmartPointer<vtkActor> act = vtkSmartPointer<vtkActor>::New();
-//	act->SetMapper(dataMap);
-
-//	vtkSmartPointer<vtkTransform> transform = vtkSmartPointer<vtkTransform>::New();
-//	//transform->RotateWXYZ(double angle, double x, double y, double z);
-//	transform->RotateWXYZ(angle, 0, 0, 1);
-
-//	transform->Translate(x,y,z);
-//	// transform->RotateWXYZ(90, 0, 0, 1);
-//	vtkSmartPointer<vtkTransformPolyDataFilter> transformFilter =
-//			vtkSmartPointer<vtkTransformPolyDataFilter>::New();
-
-//	transformFilter->SetTransform(transform);
-//	transformFilter->SetInputConnection(cylindeSource->GetOutputPort());
-//	transformFilter->Update();
-
-//	act->SetUserTransform(transform);
-
-//	render->AddActor(act);
+	render->AddActor(act);
 
 
 
-//	auto polydata = cylindeSource->GetOutput();
-//	auto dd = cylindeSource->GetCenter();
-//	qDebug()  <<" point: =------------------------ ";// << dd[0] << dd[1] << dd[2];
-//	vtkPoints *pts = polydata->GetPoints();
-//	for(int i=0; i < polydata->GetNumberOfPoints(); i++)
-//	{
-//		auto dd = polydata->GetPoint(i);
-//		qDebug()  <<" Center: " << dd[0] << dd[1] << dd[2];
+	auto polydata = cylindeSource->GetOutput();
+	auto dd = cylindeSource->GetCenter();
+	qDebug()  <<" point: =------------------------ ";// << dd[0] << dd[1] << dd[2];
+	vtkPoints *pts = polydata->GetPoints();
+	for(int i=0; i < polydata->GetNumberOfPoints(); i++)
+	{
+		auto dd = polydata->GetPoint(i);
+		qDebug()  <<" Center: " << dd[0] << dd[1] << dd[2];
 
-//	}
-
-
+	}
 
 
+
+	return act;
 
 }
 
@@ -385,32 +206,12 @@ void MainWindow::createTexture()
 {
 
 	vtkSmartPointer<vtkBMPReader> texReader =
-			vtkSmartPointer<vtkBMPReader>::New();//vtkJPEGReader
-	texReader->SetFileName("/Users/rong/dfnet/suit.bmp");
+			vtkSmartPointer<vtkBMPReader>::New();
+	texReader->SetFileName("/Users/rong/dfnet/user.bmp");
 
 	texture = vtkSmartPointer<vtkTexture>::New();
 	texture->SetInputConnection(texReader->GetOutputPort());
 	texture->InterpolateOn();
-
-
-}
-
-void MainWindow::rotateHand(MyVTKObject<vtkSmartPointer<vtkCylinderSource>> obj, float angle, int x, int y , int z,float mx, float my, float mz)
-{
-	vtkSmartPointer<vtkTransform> transform = vtkSmartPointer<vtkTransform>::New();
-	//transform->RotateWXYZ(double angle, double x, double y, double z);
-	transform->RotateWXYZ(angle, 0, 0, 1);
-
-	transform->Translate(mx,my,mz);
-	// transform->RotateWXYZ(90, 0, 0, 1);
-	vtkSmartPointer<vtkTransformPolyDataFilter> transformFilter =
-			vtkSmartPointer<vtkTransformPolyDataFilter>::New();
-
-	transformFilter->SetTransform(transform);
-	transformFilter->SetInputConnection(obj.getSource()->GetOutputPort());
-	transformFilter->Update();
-
-	obj.getActor()->SetUserTransform(transform);
 }
 
 vtkSmartPointer<vtkActor> MainWindow::createFoot(float x,float y,float z)
@@ -498,14 +299,11 @@ void MainWindow::createAxis()
 	vtkSmartPointer<vtkPoints> points=vtkSmartPointer<vtkPoints>::New();
 	//    points->SetNumberOfPoints(5);//此行可有可无
 	int index = 0;
-
-	int num = 16;
-	int total = num*3;
-	int half = num /2;
-	for (int n=0; n <num;n++) {
-		points->InsertPoint(index++,n-half,0,0);
-		points->InsertPoint(index++,0,n-half,0);
-		points->InsertPoint(index++,0,0,n-half);
+	int total = 15;
+	for (int n=0; n <5;n++) {
+		points->InsertPoint(index++,n,0,0);
+		points->InsertPoint(index++,0,3-n,0);
+		points->InsertPoint(index++,0,0,-n);
 	}
 
 	//拓扑数据
@@ -585,6 +383,8 @@ vtkSmartPointer<vtkActor> MainWindow::createCylinder(float x,float y,float z)
 	ass->SetOrigin(c[0],c[1],c[2]);
 	render->AddActor(ass);
 
+	//ass->SetUserTransform()
+
 	return act;
 }
 
@@ -614,6 +414,10 @@ vtkSmartPointer<vtkActor> MainWindow::createCylinder(float x,float y,float z,flo
 	transformFilter->Update();
 
 	act->SetUserTransform(transform);
+
+
+
+
 	//render->AddActor(act);
 	return act;
 }
@@ -640,218 +444,21 @@ void MainWindow::on_actionMX1_triggered()
 
 void MainWindow::on_actionMX2_triggered()
 {
-
-
-}
-
-void MainWindow::on_mv_valueChanged(int value)
-{
-	qDebug() << __FUNCTION__ << value;
-	vtkSmartPointer<vtkTransform> transform = vtkSmartPointer<vtkTransform>::New();
-
-	int x = ui->horizontalSlider->value();
-	int y = ui->horizontalSlider_2->value();
-	int z = ui->horizontalSlider_3->value();
-	transform->Translate(x,y,z);
-	transform->RotateWXYZ(90, 0, 0, 1);
-	vtkSmartPointer<vtkTransformPolyDataFilter> transformFilter =
-			vtkSmartPointer<vtkTransformPolyDataFilter>::New();
-
-	transformFilter->SetTransform(transform);
-	transformFilter->SetInputConnection(header.getSource()->GetOutputPort());
-	transformFilter->Update();
-	header.getActor()->SetUserTransform(transform);
-	renWin->Render();
-}
-
-void MainWindow:: on_rotate_valueChanged(int value)
-{
-	qDebug() << __FUNCTION__ << value;
-	render->GetActiveCamera()->SetPosition (0, 0, value);//设视角位置
-	renWin->Render();
-}
-
-void MainWindow::on_btn1_clicked()
-{
-	render->GetActiveCamera()->SetViewUp(0, 1 ,0 );
-	render->GetActiveCamera()->Azimuth(180);
-	renWin->Render();
-}
-
-void MainWindow::on_btn2_clicked()
-{
-	render->GetActiveCamera()->SetViewUp(0, -1 ,0 );
-	render->GetActiveCamera()->Azimuth(-180);
-	renWin->Render();
-}
-
-void MainWindow::on_btn3_clicked()
-{
-	double n = -90.0f;
-	render->GetActiveCamera()->Roll(n);
-	renWin->Render();
-}
-
-void MainWindow::on_btn4_clicked()
-{
-	render->GetActiveCamera()->SetViewAngle( render->GetActiveCamera()->GetViewAngle()+40);
-	renWin->Render();
-}
-
-void MainWindow::on_btn9_clicked()
-{
 	render->ResetCamera();
-	renWin->Render();
-}
 
+//	vtkSmartPointer<vtkTransform> transform = vtkSmartPointer<vtkTransform>::New();
+//	//transform->RotateWXYZ(double angle, double x, double y, double z);
+//	// transform->RotateWXYZ(80, 0, 0, 1);
 
-void MainWindow::createCube()
-{
+//	transform->Translate(1,0,0);
+//	// transform->RotateWXYZ(90, 0, 0, 1);
+//	vtkSmartPointer<vtkTransformPolyDataFilter> transformFilter =
+//			vtkSmartPointer<vtkTransformPolyDataFilter>::New();
 
-}
+//	transformFilter->SetTransform(transform);
+//	transformFilter->SetInputConnection(cylindeSource->GetOutputPort());
+//	transformFilter->Update();
 
-void MainWindow::textureToCube()
-{
-	// Read JPG image
-	vtkSmartPointer<vtkJPEGReader> JPEGReader = vtkSmartPointer<vtkJPEGReader>::New();
-	JPEGReader->SetFileName("/Users/rong/work/bb.jpeg");
-	JPEGReader->Update();
-
-
-	vtkSmartPointer<vtkTexture> texture1 = vtkSmartPointer<vtkTexture>::New();
-	texture1->SetInputConnection(JPEGReader->GetOutputPort());
-
-
-	// 设置立方体代码：
-	// Setup cube
-	vtkSmartPointer<vtkCubeSource> cubeSource = vtkSmartPointer<vtkCubeSource>::New();
-	cubeSource->Update();
-	vtkSmartPointer<vtkTextureMapToPlane> cubeMapper = vtkSmartPointer<vtkTextureMapToPlane>::New();
-	cubeMapper->SetInputConnection(cubeSource->GetOutputPort());
-
-	vtkSmartPointer<vtkPolyDataMapper> mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
-	mapper->SetInputConnection(cubeMapper->GetOutputPort());
-
-
-	vtkSmartPointer<vtkActor> cubeActor = vtkSmartPointer<vtkActor>::New();
-	cubeActor->SetMapper(mapper);
-	cubeActor->GetProperty()->SetDiffuseColor(.3, .6, .4);
-
-
-	cubeActor->SetTexture(texture1);
-
-//# Generate a cube
-//cube = vtk.vtkCubeSource()
-
-//# Read the image data from a file
-//reader = vtk.vtkJPEGReader()
-//reader.SetFileName("yourimage.jpg")
-
-//# Create texture object
-//texture = vtk.vtkTexture()
-//texture.SetInputConnection(reader.GetOutputPort())
-
-//#Map texture coordinates
-//map_to_plane = vtk.vtkTextureMapToPlane()
-//map_to_plane.SetInputConnection(cube.GetOutputPort())
-
-//# Create mapper and set the mapped texture as input
-//mapper = vtk.vtkPolyDataMapper()
-//mapper.SetInputConnection(map_to_plane.GetOutputPort())
-
-//# Create actor and set the mapper and the texture
-//actor = vtk.vtkActor()
-//actor.SetMapper(mapper)
-//actor.SetTexture(texture)
-
-	render->AddActor(cubeActor);
-}
-
-void MainWindow::setBodyTexture()
-{
-	// Read JPG image
-//	vtkSmartPointer<vtkJPEGReader> JPEGReader = vtkSmartPointer<vtkJPEGReader>::New();
-//	JPEGReader->SetFileName("/Users/rong/work/bb.jpeg");
-//	JPEGReader->Update();
-
-
-	vtkSmartPointer<vtkBMPReader> texReader =
-			vtkSmartPointer<vtkBMPReader>::New();//vtkJPEGReader
-	texReader->SetFileName("/Users/rong/dfnet/suit.bmp");
-
-
-	vtkSmartPointer<vtkTexture> texture1 = vtkSmartPointer<vtkTexture>::New();
-	texture1->SetInputConnection(texReader->GetOutputPort());
-
-
-	// 设置立方体代码：
-	// Setup cube
-	vtkSmartPointer<vtkCubeSource> cubeSource = body.getSource();//vtkSmartPointer<vtkCubeSource>::New();
-	cubeSource->Update();
-	vtkSmartPointer<vtkTextureMapToPlane> cubeMapper = vtkSmartPointer<vtkTextureMapToPlane>::New();
-	cubeMapper->SetInputConnection(cubeSource->GetOutputPort());
-
-
-
-	vtkSmartPointer<vtkPolyDataMapper> mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
-	mapper->SetInputConnection(cubeMapper->GetOutputPort());
-
-
-	vtkSmartPointer<vtkActor> cubeActor = body.getActor();//vtkSmartPointer<vtkActor>::New();
-	cubeActor->SetMapper(mapper);
-	cubeActor->GetProperty()->SetDiffuseColor(.3, .6, .4);
-
-
-	cubeActor->SetTexture(texture1);
-}
-
-
-void MainWindow::setHeadTexture()
-{
-	// Read JPG image
-	vtkSmartPointer<vtkJPEGReader> JPEGReader = vtkSmartPointer<vtkJPEGReader>::New();
-	JPEGReader->SetFileName("/Users/rong/work/bb.jpeg");
-	JPEGReader->Update();
-
-	vtkSmartPointer<vtkTexture> texture1 = vtkSmartPointer<vtkTexture>::New();
-	texture1->SetInputConnection(JPEGReader->GetOutputPort());
-
-	vtkSmartPointer<vtkTextureMapToPlane> cubeMapper = vtkSmartPointer<vtkTextureMapToPlane>::New();
-	cubeMapper->SetInputConnection(header.getSource()->GetOutputPort());
-
-	vtkSmartPointer<vtkPolyDataMapper> mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
-	mapper->SetInputConnection(cubeMapper->GetOutputPort());
-
-
-	header.getActor()->SetMapper(mapper);
-	header.getActor()->GetProperty()->SetDiffuseColor(.3, .6, .4);
-
-	header.getActor()->SetTexture(texture1);
+//	act->SetUserTransform(transform);
 
 }
-
-void MainWindow::setCylinderTexture(MyVTKObject<vtkSmartPointer<vtkCylinderSource>> obj)
-{
-	// Read JPG image
-	vtkSmartPointer<vtkJPEGReader> JPEGReader = vtkSmartPointer<vtkJPEGReader>::New();
-	JPEGReader->SetFileName("/Users/rong/work/bb.jpeg");
-	JPEGReader->Update();
-
-	vtkSmartPointer<vtkTexture> texture1 = vtkSmartPointer<vtkTexture>::New();
-	texture1->SetInputConnection(JPEGReader->GetOutputPort());
-
-	vtkSmartPointer<vtkTextureMapToPlane> cubeMapper = vtkSmartPointer<vtkTextureMapToPlane>::New();
-	cubeMapper->SetInputConnection(obj.getSource()->GetOutputPort());
-
-	vtkSmartPointer<vtkPolyDataMapper> mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
-	mapper->SetInputConnection(cubeMapper->GetOutputPort());
-
-
-	obj.getActor()->SetMapper(mapper);
-	obj.getActor()->GetProperty()->SetDiffuseColor(.3, .6, .4);
-
-	obj.getActor()->SetTexture(texture1);
-
-}
-
-

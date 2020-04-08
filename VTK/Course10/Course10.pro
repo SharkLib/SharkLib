@@ -18,12 +18,10 @@ INCLUDEPATH += /Users/rong/work/include
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp \
-    vtkobject.cpp
+    mainwindow.cpp
 
 HEADERS += \
-    mainwindow.h \
-    vtkobject.h
+    mainwindow.h
 
 FORMS += \
     mainwindow.ui

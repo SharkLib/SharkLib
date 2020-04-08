@@ -19,6 +19,8 @@
 #include <vtkAppendPolyData.h>
 #include <vtkCubeAxesActor2D.h>
 #include <vtkPolyDataNormals.h>
+#include <vtkPNGReader.h>
+#include <vtkTextureMapToSphere.h>
 
 #include <iterator>
 #include <iostream>
@@ -63,7 +65,45 @@ public:
 	}
 };
 
-vtkSmartPointer<vtkActor> createCubeerrr()
+
+
+ vtkSmartPointer<vtkActor> createPlane()
+ {
+	 // Create a plane
+	 vtkSmartPointer<vtkPlaneSource> plane = vtkSmartPointer<vtkPlaneSource>::New();
+	 plane->SetCenter(0.0, 0.0, 0.0);
+	 plane->SetNormal(0.0, 0.0, 1.0);
+
+	 vtkSmartPointer<vtkTextureMapToPlane> texturePlane = vtkSmartPointer<vtkTextureMapToPlane>::New();
+	 texturePlane->SetInputConnection(plane->GetOutputPort());
+
+	 vtkSmartPointer<vtkPolyDataMapper> planeMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+	 planeMapper->SetInputConnection(texturePlane->GetOutputPort());
+
+	 vtkSmartPointer<vtkActor> texturedPlane = vtkSmartPointer<vtkActor>::New();
+
+	 // Read JPG image
+	 vtkSmartPointer<vtkJPEGReader> JPEGReader = vtkSmartPointer<vtkJPEGReader>::New();
+	 JPEGReader->SetFileName("/Users/rong/work/cube.jpeg");
+	 JPEGReader->Update();
+
+
+
+
+	 auto texture = vtkSmartPointer<vtkTexture>::New();
+	 texture->SetInputConnection(JPEGReader->GetOutputPort());
+	 texture->InterpolateOn();
+
+	 texturedPlane->SetTexture(texture);
+
+	 return texturedPlane;
+//	 texturedPlane->SetMapper(planeMapper);
+//	 texturedPlane->SetTexture(m_texture);
+//	 m_pRender->AddActor(texturedPlane);
+
+}
+
+vtkSmartPointer<vtkActor> cube_texture()
 {
 	double p[6] = {0,1,0,1,0,1};
 	//获取当前坐标范围的中心点
@@ -114,8 +154,10 @@ vtkSmartPointer<vtkActor> createCubeerrr()
 	VTKPoint3D pt0, pt1, pt2;
 	vtkSmartPointer<vtkAppendPolyData> polyDatas = vtkSmartPointer<vtkAppendPolyData>::New();
 
+	int nn=0;
 	for (polys->InitTraversal();polys->GetNextCell(numberOfPoints, indices);)
 	{
+		qDebug() << __LINE__;
 		vtkSmartPointer<vtkPolyData> profile = vtkSmartPointer<vtkPolyData>::New();
 		vtkSmartPointer<vtkCellArray> lines = vtkSmartPointer<vtkCellArray>::New();
 		lines->InsertNextCell(numberOfPoints);
@@ -125,6 +167,8 @@ vtkSmartPointer<vtkActor> createCubeerrr()
 			lines->InsertCellPoint(id);
 			double point[3];
 			points->GetPoint(id, point);
+			qDebug() << __LINE__ << point[0] << point[0];
+
 			if (i == 0)
 			{
 				pt0.m_x = point[0];pt0.m_y = point[1];pt0.m_z = point[2];
@@ -148,13 +192,14 @@ vtkSmartPointer<vtkActor> createCubeerrr()
 		vtkSmartPointer<vtkTextureMapToPlane> tmapper = vtkSmartPointer<vtkTextureMapToPlane>::New();
 		tmapper->SetInputConnection(normal->GetOutputPort());
 		//设置纹理st坐标系的顶点坐标 和两点坐标，定义了st坐标系
-		tmapper->SetOrigin(pt1.m_x, pt1.m_y, pt1.m_z);
+		tmapper->SetOrigin(pt1.m_x+nn, pt1.m_y, pt1.m_z);
 		tmapper->SetPoint1(pt0.m_x, pt0.m_y, pt0.m_z);
 		tmapper->SetPoint2(pt2.m_x, pt2.m_y, pt2.m_z);
 		vtkSmartPointer<vtkTransformTextureCoords> xform = vtkSmartPointer<vtkTransformTextureCoords>::New();
 		xform->SetInputConnection(tmapper->GetOutputPort());
 		xform->SetScale(1, 1, 1);
 		polyDatas->AddInputConnection(xform->GetOutputPort());
+		nn++;
 	}
 	polyDatas->Update();
 	vtkSmartPointer<vtkPolyDataMapper> cubeMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
@@ -165,7 +210,7 @@ vtkSmartPointer<vtkActor> createCubeerrr()
 
 	// Read JPG image
 	vtkSmartPointer<vtkJPEGReader> JPEGReader = vtkSmartPointer<vtkJPEGReader>::New();
-	JPEGReader->SetFileName("/Users/rong/work/b1.jpeg");
+	JPEGReader->SetFileName("/Users/rong/work/cube.jpeg");
 	JPEGReader->Update();
 
 
@@ -179,6 +224,84 @@ vtkSmartPointer<vtkActor> createCubeerrr()
 
 	return actor;
 
+}
+
+vtkSmartPointer<vtkActor> sphore_texture()
+{
+	vtkSmartPointer<vtkSphereSource> coneSource = vtkSmartPointer<vtkSphereSource>::New();
+	coneSource->SetRadius(1);
+
+	coneSource->SetCenter(0, 0, 0);
+
+	vtkSmartPointer<vtkPolyDataMapper> coneMapper =
+			vtkSmartPointer<vtkPolyDataMapper>::New();
+	coneMapper->SetInputConnection(coneSource->GetOutputPort());
+	vtkSmartPointer<vtkActor> coneActor =
+			vtkSmartPointer<vtkActor>::New();
+	coneActor->SetMapper(coneMapper);
+
+	//coneActor->SetUserTransform(transform);
+
+
+
+	// Read JPG image
+	vtkSmartPointer<vtkPNGReader> JPEGReader = vtkSmartPointer<vtkPNGReader>::New();
+	JPEGReader->SetFileName("/Users/rong/work/git/SharkLib/pic/UcXjh.png");
+	JPEGReader->Update();
+
+	vtkSmartPointer<vtkTexture> texture1 = vtkSmartPointer<vtkTexture>::New();
+	texture1->SetInputConnection(JPEGReader->GetOutputPort());
+
+	vtkSmartPointer<vtkTextureMapToSphere> cubeMapper = vtkSmartPointer<vtkTextureMapToSphere>::New();
+	cubeMapper->SetInputConnection(coneSource->GetOutputPort());
+
+	vtkSmartPointer<vtkPolyDataMapper> mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+	mapper->SetInputConnection(cubeMapper->GetOutputPort());
+
+
+	coneActor->SetMapper(mapper);
+	coneActor->GetProperty()->SetDiffuseColor(.3, .6, .4);
+
+	coneActor->SetTexture(texture1);
+
+	return coneActor;
+}
+
+
+vtkSmartPointer<vtkActor>  Cylinder_texture( )
+{
+   //对圆柱体渲染
+   vtkSmartPointer<vtkCylinderSource> cylinder =
+   vtkSmartPointer<vtkCylinderSource>::New();
+   cylinder->SetHeight( 3.0 );
+   cylinder->SetRadius( 1.0 );
+   cylinder->SetResolution( 10 );
+
+   //对球体渲染
+ /*  vtkSmartPointer<vtkSphereSource> sphere =
+	   vtkSmartPointer<vtkSphereSource>::New();
+   sphere->SetRadius(2.0);
+   sphere->SetThetaResolution(20);
+   sphere->SetPhiResolution(20);*/
+
+   vtkSmartPointer<vtkJPEGReader>bmpReader = vtkSmartPointer<vtkJPEGReader>::New();
+   bmpReader->SetFileName("/Users/rong/work/git/SharkLib/pic/bb.jpeg");//读入纹理图
+   vtkSmartPointer<vtkTexture>texture = vtkSmartPointer<vtkTexture>::New();
+   texture->SetInputConnection(bmpReader->GetOutputPort());
+   texture->InterpolateOn();
+
+   vtkSmartPointer<vtkPolyDataMapper> cylinderMapper =
+	   vtkSmartPointer<vtkPolyDataMapper>::New();
+   cylinderMapper->SetInputConnection( cylinder->GetOutputPort() );
+   //cylinderMapper->SetInputConnection( sphere->GetOutputPort() );//对球体渲染
+
+   vtkSmartPointer<vtkActor> cylinderActor =
+	   vtkSmartPointer<vtkActor>::New();
+   cylinderActor->SetMapper( cylinderMapper );
+   cylinderActor->SetTexture(texture);//纹理为actor的一种属性
+
+
+   return cylinderActor;
 }
 
 MainWindow::MainWindow(QWidget *parent)
@@ -202,18 +325,25 @@ MainWindow::MainWindow(QWidget *parent)
 
 	ltAssembly << ass;
 
+	qint64 iA = 1998888778918294;
+	long lA = 1998888778918294;
+	qDebug() << iA <<lA;
 
 
-	render->AddActor( createCubeerrr());
 
+	render->AddActor( createPlane());
+	render->AddActor( cube_texture());
+	//render->AddActor( sphore_texture());
+	//render->AddActor( Cylinder_texture());
 
+/*
 	//绘制
-	   vtkCamera *camera = vtkCamera::New();
-	  camera->SetPosition(1,1,5);
-	  camera->SetFocalPoint(0,0,0);
+	vtkCamera *camera = vtkCamera::New();
+	camera->SetPosition(1,1,5);
+	camera->SetFocalPoint(0,0,0);
 
 	render->SetActiveCamera(camera);
-
+*/
 	renWin->AddRenderer( render );
 
 

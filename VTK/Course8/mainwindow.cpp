@@ -19,6 +19,7 @@
 #include <vtkAppendPolyData.h>
 #include <vtkCubeAxesActor2D.h>
 #include <vtkPolyDataNormals.h>
+#include <vtkPNGReader.h>
 
 #include <iterator>
 #include <iostream>
@@ -674,8 +675,8 @@ void MainWindow::setBodyTexture()
 void MainWindow::setHeadTexture()
 {
 	// Read JPG image
-	vtkSmartPointer<vtkJPEGReader> JPEGReader = vtkSmartPointer<vtkJPEGReader>::New();
-	JPEGReader->SetFileName("/Users/rong/dfnet/head.jpg");
+	vtkSmartPointer<vtkPNGReader> JPEGReader = vtkSmartPointer<vtkPNGReader>::New();
+	JPEGReader->SetFileName("/Users/rong/work/git/SharkLib/pic/UcXjh.png");
 	JPEGReader->Update();
 
 	vtkSmartPointer<vtkTexture> texture1 = vtkSmartPointer<vtkTexture>::New();

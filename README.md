@@ -55,7 +55,7 @@ In Qt course, I will teach how to Learn Qt in 21 Days step by step..
 |<img src= "https://github.com/SharkLib/SharkLib/blob/master/pic/ezgif-6-668a6bd0c468.gif" width="200" height="200">|
 
 
-In VTK course, I will teach how to implement VTK in 21 Days step by step.. 
+In VTK course, I will teach how to implement VTK in 10 cources. 
 
  - Course One - [Setup your computer.](https://sharklib.github.io/vtk/2020/01/01/vtk-course1.html)
 
