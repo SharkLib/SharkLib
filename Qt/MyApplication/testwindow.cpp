@@ -69,6 +69,9 @@ void TestWindow::loadPlugins()
 			connect(action, &QAction::triggered, this, &TestWindow::slot_activeWindow);
 
 			nIndex++ ;
+			QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
+			item->setText(avc->name());
+			ui->listWidget->addItem(item);
 		}
 		else
 		{
@@ -94,4 +97,9 @@ void TestWindow::slot_activeWindow()
 	{
 		ui->stackedWidget->setCurrentIndex( action->data().toInt());
 	}
+}
+
+void TestWindow::on_listWidget_currentRowChanged(int currentRow)
+{
+	ui->stackedWidget->setCurrentIndex( currentRow);
 }

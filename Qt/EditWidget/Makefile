@@ -37,7 +37,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = EditWidget1.0.0
-DISTDIR = /Users/rong/work/git/SharkLib/release/App/plugin/EditWidget1.0.0
+DISTDIR = /Users/rong/work/git_code/github_shark/SharkLib/release/App/plugin/EditWidget1.0.0
 LINK          = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
 LFLAGS        = -stdlib=libc++ -headerpad_max_install_names $(EXPORT_ARCH_ARGS) -Wl,-syslibroot,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -mmacosx-version-min=10.12 -Wl,-rpath,@executable_path/../Frameworks -Wl,-rpath,/usr/local/Qt/5.12.6/lib -single_module -dynamiclib
 LIBS          = $(SUBLIBS) -F/usr/local/Qt/5.12.6/lib -framework QtCharts -framework QtWidgets -framework QtMultimedia -framework QtGui -framework QtNetwork -framework QtCore -framework DiskArbitration -framework IOKit -framework OpenGL -framework AGL   
@@ -267,7 +267,7 @@ TARGETD       = libEditWidget.dylib
 EXPORT_VALID_ARCHS = x86_64
 EXPORT_ACTIVE_ARCHS = $(filter $(EXPORT_VALID_ARCHS), $(ARCHS))
 EXPORT_ARCH_ARGS = $(foreach arch, $(if $(EXPORT_ACTIVE_ARCHS), $(EXPORT_ACTIVE_ARCHS), $(EXPORT_VALID_ARCHS)), -arch $(arch))
-EXPORT__PRO_FILE_ = /Users/rong/work/git/SharkLib/Qt/EditWidget/EditWidget.pro
+EXPORT__PRO_FILE_ = /Users/rong/work/git_code/github_shark/SharkLib/Qt/EditWidget/EditWidget.pro
 
 
 first: all
@@ -765,7 +765,7 @@ compiler_moc_header_clean:
 		/usr/local/Qt/5.12.6/lib/QtWidgets.framework/Headers/qmenu.h \
 		../../release/App/plugin/moc_predefs.h \
 		/usr/local/Qt/5.12.6/bin/moc
-	/usr/local/Qt/5.12.6/bin/moc $(DEFINES) --include /Users/rong/work/git/SharkLib/release/App/plugin/moc_predefs.h -I/usr/local/Qt/5.12.6/mkspecs/macx-clang -I/Users/rong/work/git/SharkLib/Qt/EditWidget -I/usr/local/Qt/5.12.6/lib/QtCharts.framework/Headers -I/usr/local/Qt/5.12.6/lib/QtWidgets.framework/Headers -I/usr/local/Qt/5.12.6/lib/QtMultimedia.framework/Headers -I/usr/local/Qt/5.12.6/lib/QtGui.framework/Headers -I/usr/local/Qt/5.12.6/lib/QtNetwork.framework/Headers -I/usr/local/Qt/5.12.6/lib/QtCore.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/include -F/usr/local/Qt/5.12.6/lib editplugin.h -o ../../release/App/plugin/moc_editplugin.cpp
+	/usr/local/Qt/5.12.6/bin/moc $(DEFINES) --include /Users/rong/work/git_code/github_shark/SharkLib/release/App/plugin/moc_predefs.h -I/usr/local/Qt/5.12.6/mkspecs/macx-clang -I/Users/rong/work/git_code/github_shark/SharkLib/Qt/EditWidget -I/usr/local/Qt/5.12.6/lib/QtCharts.framework/Headers -I/usr/local/Qt/5.12.6/lib/QtWidgets.framework/Headers -I/usr/local/Qt/5.12.6/lib/QtMultimedia.framework/Headers -I/usr/local/Qt/5.12.6/lib/QtGui.framework/Headers -I/usr/local/Qt/5.12.6/lib/QtNetwork.framework/Headers -I/usr/local/Qt/5.12.6/lib/QtCore.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/12.0.0/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -F/usr/local/Qt/5.12.6/lib editplugin.h -o ../../release/App/plugin/moc_editplugin.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:

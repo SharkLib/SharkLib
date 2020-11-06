@@ -17,7 +17,7 @@ CXX           = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefau
 DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_PLUGIN -DQT_CHARTS_LIB -DQT_WIDGETS_LIB -DQT_MULTIMEDIA_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -mmacosx-version-min=10.12 -Wall -W -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -stdlib=libc++ -O2 -std=gnu++11 $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -mmacosx-version-min=10.12 -Wall -W -fPIC $(DEFINES)
-INCPATH       = -I. -I../../../../include/vtk-8.2 -I../../../../include -I/usr/local/Qt/5.12.6/lib/QtCharts.framework/Headers -I/usr/local/Qt/5.12.6/lib/QtWidgets.framework/Headers -I/usr/local/Qt/5.12.6/lib/QtMultimedia.framework/Headers -I/usr/local/Qt/5.12.6/lib/QtGui.framework/Headers -I/usr/local/Qt/5.12.6/lib/QtNetwork.framework/Headers -I/usr/local/Qt/5.12.6/lib/QtCore.framework/Headers -I../../release/App/plugin -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AGL.framework/Headers -I/usr/local/Qt/5.12.6/include -I/usr/local/Qt/5.12.6/mkspecs/macx-clang -F/usr/local/Qt/5.12.6/lib
+INCPATH       = -I. -I/Users/rong/work/include/vtk-8.2 -I/Users/rong/work/include -I/usr/local/Qt/5.12.6/lib/QtCharts.framework/Headers -I/usr/local/Qt/5.12.6/lib/QtWidgets.framework/Headers -I/usr/local/Qt/5.12.6/lib/QtMultimedia.framework/Headers -I/usr/local/Qt/5.12.6/lib/QtGui.framework/Headers -I/usr/local/Qt/5.12.6/lib/QtNetwork.framework/Headers -I/usr/local/Qt/5.12.6/lib/QtCore.framework/Headers -I../../release/App/plugin -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AGL.framework/Headers -I/usr/local/Qt/5.12.6/include -I/usr/local/Qt/5.12.6/mkspecs/macx-clang -F/usr/local/Qt/5.12.6/lib
 QMAKE         = /usr/local/Qt/5.12.6/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -37,7 +37,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = VTKWidget1.0.0
-DISTDIR = /Users/rong/work/git/SharkLib/release/App/plugin/VTKWidget1.0.0
+DISTDIR = /Users/rong/work/git_code/github_shark/SharkLib/release/App/plugin/VTKWidget1.0.0
 LINK          = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
 LFLAGS        = -stdlib=libc++ -headerpad_max_install_names $(EXPORT_ARCH_ARGS) -Wl,-syslibroot,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -mmacosx-version-min=10.12 -Wl,-rpath,@executable_path/../Frameworks -Wl,-rpath,/usr/local/Qt/5.12.6/lib -single_module -dynamiclib
 LIBS          = $(SUBLIBS) -F/usr/local/Qt/5.12.6/lib -L/usr/local/lib/ -lvtkChartsCore-8.2.1 -lvtkCommonColor-8.2.1 -lvtkCommonComputationalGeometry-8.2.1 -lvtkCommonCore-8.2.1 -lvtkCommonDataModel-8.2.1 -lvtkCommonExecutionModel-8.2.1 -lvtkCommonMath-8.2.1 -lvtkCommonMisc-8.2.1 -lvtkCommonSystem-8.2.1 -lvtkCommonTransforms-8.2.1 -lvtkDICOMParser-8.2.1 -lvtkDomainsChemistry-8.2.1 -lvtkDomainsChemistryOpenGL2-8.2.1 -lvtkFiltersAMR-8.2.1 -lvtkFiltersCore-8.2.1 -lvtkFiltersExtraction-8.2.1 -lvtkFiltersFlowPaths-8.2.1 -lvtkFiltersGeneral-8.2.1 -lvtkFiltersGeneric-8.2.1 -lvtkFiltersGeometry-8.2.1 -lvtkFiltersHybrid-8.2.1 -lvtkFiltersHyperTree-8.2.1 -lvtkFiltersImaging-8.2.1 -lvtkFiltersModeling-8.2.1 -lvtkFiltersParallel-8.2.1 -lvtkFiltersParallelImaging-8.2.1 -lvtkFiltersPoints-8.2.1 -lvtkFiltersProgrammable-8.2.1 -lvtkFiltersSMP-8.2.1 -lvtkFiltersSelection-8.2.1 -lvtkFiltersSources-8.2.1 -lvtkFiltersStatistics-8.2.1 -lvtkFiltersTexture-8.2.1 -lvtkFiltersTopology-8.2.1 -lvtkFiltersVerdict-8.2.1 -lvtkGUISupportQt-8.2.1 -lvtkGUISupportQtSQL-8.2.1 -lvtkGeovisCore-8.2.1 -lvtkIOAMR-8.2.1 -lvtkIOAsynchronous-8.2.1 -lvtkIOCityGML-8.2.1 -lvtkIOCore-8.2.1 -lvtkIOEnSight-8.2.1 -lvtkIOExodus-8.2.1 -lvtkIOExport-8.2.1 -lvtkIOExportOpenGL2-8.2.1 -lvtkIOExportPDF-8.2.1 -lvtkIOGeometry-8.2.1 -lvtkIOImage-8.2.1 -lvtkIOImport-8.2.1 -lvtkIOInfovis-8.2.1 -lvtkIOLSDyna-8.2.1 -lvtkIOLegacy-8.2.1 -lvtkIOMINC-8.2.1 -lvtkIOMovie-8.2.1 -lvtkIONetCDF-8.2.1 -lvtkIOPLY-8.2.1 -lvtkIOParallel-8.2.1 -lvtkIOParallelXML-8.2.1 -lvtkIOSQL-8.2.1 -lvtkIOSegY-8.2.1 -lvtkIOTecplotTable-8.2.1 -lvtkIOVeraOut-8.2.1 -lvtkIOVideo-8.2.1 -lvtkIOXML-8.2.1 -lvtkIOXMLParser-8.2.1 -lvtkImagingColor-8.2.1 -lvtkImagingCore-8.2.1 -lvtkImagingFourier-8.2.1 -lvtkImagingGeneral-8.2.1 -lvtkImagingHybrid-8.2.1 -lvtkImagingMath-8.2.1 -lvtkImagingMorphological-8.2.1 -lvtkImagingSources-8.2.1 -lvtkImagingStatistics-8.2.1 -lvtkImagingStencil-8.2.1 -lvtkInfovisCore-8.2.1 -lvtkInfovisLayout-8.2.1 -lvtkInteractionImage-8.2.1 -lvtkInteractionStyle-8.2.1 -lvtkInteractionWidgets-8.2.1 -lvtkNetCDF-8.2.1 -lvtkParallelCore-8.2.1 -lvtkRenderingAnnotation-8.2.1 -lvtkRenderingContext2D-8.2.1 -lvtkRenderingContextOpenGL2-8.2.1 -lvtkRenderingCore-8.2.1 -lvtkRenderingFreeType-8.2.1 -lvtkRenderingGL2PSOpenGL2-8.2.1 -lvtkRenderingImage-8.2.1 -lvtkRenderingLOD-8.2.1 -lvtkRenderingLabel-8.2.1 -lvtkRenderingOpenGL2-8.2.1 -lvtkRenderingQt-8.2.1 -lvtkRenderingVolume-8.2.1 -lvtkRenderingVolumeOpenGL2-8.2.1 -lvtkViewsContext2D-8.2.1 -lvtkViewsCore-8.2.1 -lvtkViewsInfovis-8.2.1 -lvtkViewsQt-8.2.1 -lvtkdoubleconversion-8.2.1 -lvtkexodusII-8.2.1 -lvtkexpat-8.2.1 -lvtkfreetype-8.2.1 -lvtkgl2ps-8.2.1 -lvtkglew-8.2.1 -lvtkhdf5-8.2.1 -lvtkhdf5_hl-8.2.1 -lvtkjpeg-8.2.1 -lvtkjsoncpp-8.2.1 -lvtklibharu-8.2.1 -lvtklibxml2-8.2.1 -lvtklz4-8.2.1 -lvtklzma-8.2.1 -lvtkmetaio-8.2.1 -lvtkogg-8.2.1 -lvtkpng-8.2.1 -lvtkproj-8.2.1 -lvtkpugixml-8.2.1 -lvtksqlite-8.2.1 -lvtksys-8.2.1 -lvtktheora-8.2.1 -lvtktiff-8.2.1 -lvtkverdict-8.2.1 -lvtkzlib-8.2.1 -framework QtCharts -framework QtWidgets -framework QtMultimedia -framework QtGui -framework QtNetwork -framework QtCore -framework DiskArbitration -framework IOKit -framework OpenGL -framework AGL   
@@ -267,7 +267,7 @@ TARGETD       = libVTKWidget.dylib
 EXPORT_VALID_ARCHS = x86_64
 EXPORT_ACTIVE_ARCHS = $(filter $(EXPORT_VALID_ARCHS), $(ARCHS))
 EXPORT_ARCH_ARGS = $(foreach arch, $(if $(EXPORT_ACTIVE_ARCHS), $(EXPORT_ACTIVE_ARCHS), $(EXPORT_VALID_ARCHS)), -arch $(arch))
-EXPORT__PRO_FILE_ = /Users/rong/work/git/SharkLib/Qt/VTKWidget/VTKWidget.pro
+EXPORT__PRO_FILE_ = /Users/rong/work/git_code/github_shark/SharkLib/Qt/VTKWidget/VTKWidget.pro
 
 
 first: all
@@ -765,7 +765,7 @@ compiler_moc_header_clean:
 		/usr/local/Qt/5.12.6/lib/QtWidgets.framework/Headers/qmenu.h \
 		../../release/App/plugin/moc_predefs.h \
 		/usr/local/Qt/5.12.6/bin/moc
-	/usr/local/Qt/5.12.6/bin/moc $(DEFINES) --include /Users/rong/work/git/SharkLib/release/App/plugin/moc_predefs.h -I/usr/local/Qt/5.12.6/mkspecs/macx-clang -I/Users/rong/work/git/SharkLib/Qt/VTKWidget -I/Users/rong/work/include/vtk-8.2 -I/Users/rong/work/include -I/usr/local/Qt/5.12.6/lib/QtCharts.framework/Headers -I/usr/local/Qt/5.12.6/lib/QtWidgets.framework/Headers -I/usr/local/Qt/5.12.6/lib/QtMultimedia.framework/Headers -I/usr/local/Qt/5.12.6/lib/QtGui.framework/Headers -I/usr/local/Qt/5.12.6/lib/QtNetwork.framework/Headers -I/usr/local/Qt/5.12.6/lib/QtCore.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/include -F/usr/local/Qt/5.12.6/lib vtkplugin.h -o ../../release/App/plugin/moc_vtkplugin.cpp
+	/usr/local/Qt/5.12.6/bin/moc $(DEFINES) --include /Users/rong/work/git_code/github_shark/SharkLib/release/App/plugin/moc_predefs.h -I/usr/local/Qt/5.12.6/mkspecs/macx-clang -I/Users/rong/work/git_code/github_shark/SharkLib/Qt/VTKWidget -I/Users/rong/work/include/vtk-8.2 -I/Users/rong/work/include -I/usr/local/Qt/5.12.6/lib/QtCharts.framework/Headers -I/usr/local/Qt/5.12.6/lib/QtWidgets.framework/Headers -I/usr/local/Qt/5.12.6/lib/QtMultimedia.framework/Headers -I/usr/local/Qt/5.12.6/lib/QtGui.framework/Headers -I/usr/local/Qt/5.12.6/lib/QtNetwork.framework/Headers -I/usr/local/Qt/5.12.6/lib/QtCore.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/12.0.0/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -F/usr/local/Qt/5.12.6/lib vtkplugin.h -o ../../release/App/plugin/moc_vtkplugin.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -826,174 +826,174 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean
 		/usr/local/Qt/5.12.6/lib/QtWidgets.framework/Headers/qmenu.h \
 		/usr/local/Qt/5.12.6/lib/QtCore.framework/Headers/QDebug \
 		/usr/local/Qt/5.12.6/lib/QtCore.framework/Headers/qdebug.h \
-		../../../../include/vtk-8.2/vtkQImageToImageSource.h \
-		../../../../include/vtk-8.2/vtkRenderingQtModule.h \
-		../../../../include/vtk-8.2/vtkRenderingCoreModule.h \
-		../../../../include/vtk-8.2/vtkFiltersCoreModule.h \
-		../../../../include/vtk-8.2/vtkAutoInit.h \
-		../../../../include/vtk-8.2/vtkDebugLeaksManager.h \
-		../../../../include/vtk-8.2/vtkCommonCoreModule.h \
-		../../../../include/vtk-8.2/vtkSystemIncludes.h \
-		../../../../include/vtk-8.2/vtkWin32Header.h \
-		../../../../include/vtk-8.2/vtkConfigure.h \
-		../../../../include/vtk-8.2/vtkVersionMacros.h \
-		../../../../include/vtk-8.2/vtkABI.h \
-		../../../../include/vtk-8.2/vtkIOStreamFwd.h \
-		../../../../include/vtk-8.2/vtkIOStream.h \
-		../../../../include/vtk-8.2/vtkType.h \
-		../../../../include/vtk-8.2/vtk_kwiml.h \
-		../../../../include/vtk-8.2/vtkkwiml/abi.h \
-		../../../../include/vtk-8.2/vtkkwiml/int.h \
-		../../../../include/vtk-8.2/vtkWrappingHints.h \
-		../../../../include/vtk-8.2/vtkOStreamWrapper.h \
-		../../../../include/vtk-8.2/vtkOStrStreamWrapper.h \
-		../../../../include/vtk-8.2/vtkTimeStamp.h \
-		../../../../include/vtk-8.2/vtkRenderingLabelModule.h \
-		../../../../include/vtk-8.2/vtkRenderingFreeTypeModule.h \
-		../../../../include/vtk-8.2/vtkImageAlgorithm.h \
-		../../../../include/vtk-8.2/vtkCommonExecutionModelModule.h \
-		../../../../include/vtk-8.2/vtkAlgorithm.h \
-		../../../../include/vtk-8.2/vtkObject.h \
-		../../../../include/vtk-8.2/vtkObjectBase.h \
-		../../../../include/vtk-8.2/vtkIndent.h \
-		../../../../include/vtk-8.2/vtkAtomicTypes.h \
-		../../../../include/vtk-8.2/vtkAtomic.h \
-		../../../../include/vtk-8.2/vtkAtomicTypeConcepts.h \
-		../../../../include/vtk-8.2/vtkSetGet.h \
-		../../../../include/vtk-8.2/vtkWeakPointerBase.h \
-		../../../../include/vtk-8.2/vtkSmartPointer.h \
-		../../../../include/vtk-8.2/vtkSmartPointerBase.h \
-		../../../../include/vtk-8.2/vtkNew.h \
+		/Users/rong/work/include/vtk-8.2/vtkQImageToImageSource.h \
+		/Users/rong/work/include/vtk-8.2/vtkRenderingQtModule.h \
+		/Users/rong/work/include/vtk-8.2/vtkRenderingCoreModule.h \
+		/Users/rong/work/include/vtk-8.2/vtkFiltersCoreModule.h \
+		/Users/rong/work/include/vtk-8.2/vtkAutoInit.h \
+		/Users/rong/work/include/vtk-8.2/vtkDebugLeaksManager.h \
+		/Users/rong/work/include/vtk-8.2/vtkCommonCoreModule.h \
+		/Users/rong/work/include/vtk-8.2/vtkSystemIncludes.h \
+		/Users/rong/work/include/vtk-8.2/vtkWin32Header.h \
+		/Users/rong/work/include/vtk-8.2/vtkConfigure.h \
+		/Users/rong/work/include/vtk-8.2/vtkVersionMacros.h \
+		/Users/rong/work/include/vtk-8.2/vtkABI.h \
+		/Users/rong/work/include/vtk-8.2/vtkIOStreamFwd.h \
+		/Users/rong/work/include/vtk-8.2/vtkIOStream.h \
+		/Users/rong/work/include/vtk-8.2/vtkType.h \
+		/Users/rong/work/include/vtk-8.2/vtk_kwiml.h \
+		/Users/rong/work/include/vtk-8.2/vtkkwiml/abi.h \
+		/Users/rong/work/include/vtk-8.2/vtkkwiml/int.h \
+		/Users/rong/work/include/vtk-8.2/vtkWrappingHints.h \
+		/Users/rong/work/include/vtk-8.2/vtkOStreamWrapper.h \
+		/Users/rong/work/include/vtk-8.2/vtkOStrStreamWrapper.h \
+		/Users/rong/work/include/vtk-8.2/vtkTimeStamp.h \
+		/Users/rong/work/include/vtk-8.2/vtkRenderingLabelModule.h \
+		/Users/rong/work/include/vtk-8.2/vtkRenderingFreeTypeModule.h \
+		/Users/rong/work/include/vtk-8.2/vtkImageAlgorithm.h \
+		/Users/rong/work/include/vtk-8.2/vtkCommonExecutionModelModule.h \
+		/Users/rong/work/include/vtk-8.2/vtkAlgorithm.h \
+		/Users/rong/work/include/vtk-8.2/vtkObject.h \
+		/Users/rong/work/include/vtk-8.2/vtkObjectBase.h \
+		/Users/rong/work/include/vtk-8.2/vtkIndent.h \
+		/Users/rong/work/include/vtk-8.2/vtkAtomicTypes.h \
+		/Users/rong/work/include/vtk-8.2/vtkAtomic.h \
+		/Users/rong/work/include/vtk-8.2/vtkAtomicTypeConcepts.h \
+		/Users/rong/work/include/vtk-8.2/vtkSetGet.h \
+		/Users/rong/work/include/vtk-8.2/vtkWeakPointerBase.h \
+		/Users/rong/work/include/vtk-8.2/vtkSmartPointer.h \
+		/Users/rong/work/include/vtk-8.2/vtkSmartPointerBase.h \
+		/Users/rong/work/include/vtk-8.2/vtkNew.h \
 		/usr/local/Qt/5.12.6/lib/QtWidgets.framework/Headers/QLabel \
 		/usr/local/Qt/5.12.6/lib/QtWidgets.framework/Headers/qlabel.h \
-		../../../../include/vtk-8.2/QVTKOpenGLNativeWidget.h \
+		/Users/rong/work/include/vtk-8.2/QVTKOpenGLNativeWidget.h \
 		/usr/local/Qt/5.12.6/lib/QtWidgets.framework/Headers/QOpenGLWidget \
 		/usr/local/Qt/5.12.6/lib/QtWidgets.framework/Headers/qopenglwidget.h \
-		../../../../include/vtk-8.2/QVTKInteractor.h \
-		../../../../include/vtk-8.2/vtkGUISupportQtModule.h \
-		../../../../include/vtk-8.2/vtkRenderingOpenGL2Module.h \
-		../../../../include/vtk-8.2/vtkRenderingOpenGLConfigure.h \
-		../../../../include/vtk-8.2/QVTKWin32Header.h \
-		../../../../include/vtk-8.2/vtkRenderWindowInteractor.h \
-		../../../../include/vtk-8.2/vtkCommand.h \
-		../../../../include/vtk-8.2/vtkTDxConfigure.h \
-		../../../../include/vtk-8.2/vtkAnimationCue.h \
-		../../../../include/vtk-8.2/vtkAnimationScene.h \
-		../../../../include/vtk-8.2/vtkCommonDataModelModule.h \
-		../../../../include/vtk-8.2/vtkCamera.h \
-		../../../../include/vtk-8.2/vtkRect.h \
-		../../../../include/vtk-8.2/vtkVector.h \
-		../../../../include/vtk-8.2/vtkTuple.h \
-		../../../../include/vtk-8.2/vtkMath.h \
-		../../../../include/vtk-8.2/vtkTypeTraits.h \
-		../../../../include/vtk-8.2/vtkMathConfigure.h \
-		../../../../include/vtk-8.2/vtkColor.h \
-		../../../../include/vtk-8.2/vtkConeSource.h \
-		../../../../include/vtk-8.2/vtkFiltersSourcesModule.h \
-		../../../../include/vtk-8.2/vtkPolyDataAlgorithm.h \
-		../../../../include/vtk-8.2/vtkPolyData.h \
-		../../../../include/vtk-8.2/vtkPointSet.h \
-		../../../../include/vtk-8.2/vtkDataSet.h \
-		../../../../include/vtk-8.2/vtkDataObject.h \
-		../../../../include/vtk-8.2/vtkPoints.h \
-		../../../../include/vtk-8.2/vtkDataArray.h \
-		../../../../include/vtk-8.2/vtkAbstractArray.h \
-		../../../../include/vtk-8.2/vtkVariant.h \
-		../../../../include/vtk-8.2/vtkStdString.h \
-		../../../../include/vtk-8.2/vtkUnicodeString.h \
-		../../../../include/vtk-8.2/vtkVariantInlineOperators.h \
-		../../../../include/vtk-8.2/vtkCellTypes.h \
-		../../../../include/vtk-8.2/vtkIntArray.h \
-		../../../../include/vtk-8.2/vtkAOSDataArrayTemplate.h \
-		../../../../include/vtk-8.2/vtkGenericDataArray.h \
-		../../../../include/vtk-8.2/vtkGenericDataArrayLookupHelper.h \
-		../../../../include/vtk-8.2/vtkIdList.h \
-		../../../../include/vtk-8.2/vtkGenericDataArray.txx \
-		../../../../include/vtk-8.2/vtkVariantCast.h \
-		../../../../include/vtk-8.2/vtkBuffer.h \
-		../../../../include/vtk-8.2/vtkObjectFactory.h \
-		../../../../include/vtk-8.2/vtkIdTypeArray.h \
-		../../../../include/vtk-8.2/vtkUnsignedCharArray.h \
-		../../../../include/vtk-8.2/vtkCellType.h \
-		../../../../include/vtk-8.2/vtkCellLinks.h \
-		../../../../include/vtk-8.2/vtkAbstractCellLinks.h \
-		../../../../include/vtk-8.2/vtkCellArray.h \
-		../../../../include/vtk-8.2/vtkCell.h \
-		../../../../include/vtk-8.2/vtkNamedColors.h \
-		../../../../include/vtk-8.2/vtkCommonColorModule.h \
-		../../../../include/vtk-8.2/vtkStringArray.h \
-		../../../../include/vtk-8.2/vtkPolyDataMapper.h \
-		../../../../include/vtk-8.2/vtkMapper.h \
-		../../../../include/vtk-8.2/vtkAbstractMapper3D.h \
-		../../../../include/vtk-8.2/vtkAbstractMapper.h \
-		../../../../include/vtk-8.2/vtkProperty.h \
-		../../../../include/vtk-8.2/vtkRenderWindow.h \
-		../../../../include/vtk-8.2/vtkWindow.h \
-		../../../../include/vtk-8.2/vtkRenderer.h \
-		../../../../include/vtk-8.2/vtkViewport.h \
-		../../../../include/vtk-8.2/vtkVolumeCollection.h \
-		../../../../include/vtk-8.2/vtkPropCollection.h \
-		../../../../include/vtk-8.2/vtkCollection.h \
-		../../../../include/vtk-8.2/vtkProp.h \
-		../../../../include/vtk-8.2/vtkVolume.h \
-		../../../../include/vtk-8.2/vtkProp3D.h \
-		../../../../include/vtk-8.2/vtkActorCollection.h \
-		../../../../include/vtk-8.2/vtkActor.h \
-		../../../../include/vtk-8.2/vtkSphereSource.h \
-		../../../../include/vtk-8.2/vtkTDxInteractorStyle.h \
-		../../../../include/vtk-8.2/vtkTDxInteractorStyleSettings.h \
-		../../../../include/vtk-8.2/vtkEventQtSlotConnect.h \
-		../../../../include/vtk-8.2/vtkGenericOpenGLRenderWindow.h \
-		../../../../include/vtk-8.2/vtkOpenGLRenderWindow.h \
-		../../../../include/vtk-8.2/vtkDataObjectToTable.h \
-		../../../../include/vtk-8.2/vtkInfovisCoreModule.h \
-		../../../../include/vtk-8.2/vtkTableAlgorithm.h \
-		../../../../include/vtk-8.2/vtkElevationFilter.h \
-		../../../../include/vtk-8.2/vtkDataSetAlgorithm.h \
-		../../../../include/vtk-8.2/vtkQtTableView.h \
-		../../../../include/vtk-8.2/vtkViewsQtModule.h \
-		../../../../include/vtk-8.2/vtkViewsCoreModule.h \
-		../../../../include/vtk-8.2/vtkInteractionWidgetsModule.h \
-		../../../../include/vtk-8.2/vtkFiltersGeneralModule.h \
-		../../../../include/vtk-8.2/vtkViewsInfovisModule.h \
-		../../../../include/vtk-8.2/vtkInteractionStyleModule.h \
-		../../../../include/vtk-8.2/vtkRenderingContext2DModule.h \
-		../../../../include/vtk-8.2/vtkQtView.h \
-		../../../../include/vtk-8.2/vtkView.h \
+		/Users/rong/work/include/vtk-8.2/QVTKInteractor.h \
+		/Users/rong/work/include/vtk-8.2/vtkGUISupportQtModule.h \
+		/Users/rong/work/include/vtk-8.2/vtkRenderingOpenGL2Module.h \
+		/Users/rong/work/include/vtk-8.2/vtkRenderingOpenGLConfigure.h \
+		/Users/rong/work/include/vtk-8.2/QVTKWin32Header.h \
+		/Users/rong/work/include/vtk-8.2/vtkRenderWindowInteractor.h \
+		/Users/rong/work/include/vtk-8.2/vtkCommand.h \
+		/Users/rong/work/include/vtk-8.2/vtkTDxConfigure.h \
+		/Users/rong/work/include/vtk-8.2/vtkAnimationCue.h \
+		/Users/rong/work/include/vtk-8.2/vtkAnimationScene.h \
+		/Users/rong/work/include/vtk-8.2/vtkCommonDataModelModule.h \
+		/Users/rong/work/include/vtk-8.2/vtkCamera.h \
+		/Users/rong/work/include/vtk-8.2/vtkRect.h \
+		/Users/rong/work/include/vtk-8.2/vtkVector.h \
+		/Users/rong/work/include/vtk-8.2/vtkTuple.h \
+		/Users/rong/work/include/vtk-8.2/vtkMath.h \
+		/Users/rong/work/include/vtk-8.2/vtkTypeTraits.h \
+		/Users/rong/work/include/vtk-8.2/vtkMathConfigure.h \
+		/Users/rong/work/include/vtk-8.2/vtkColor.h \
+		/Users/rong/work/include/vtk-8.2/vtkConeSource.h \
+		/Users/rong/work/include/vtk-8.2/vtkFiltersSourcesModule.h \
+		/Users/rong/work/include/vtk-8.2/vtkPolyDataAlgorithm.h \
+		/Users/rong/work/include/vtk-8.2/vtkPolyData.h \
+		/Users/rong/work/include/vtk-8.2/vtkPointSet.h \
+		/Users/rong/work/include/vtk-8.2/vtkDataSet.h \
+		/Users/rong/work/include/vtk-8.2/vtkDataObject.h \
+		/Users/rong/work/include/vtk-8.2/vtkPoints.h \
+		/Users/rong/work/include/vtk-8.2/vtkDataArray.h \
+		/Users/rong/work/include/vtk-8.2/vtkAbstractArray.h \
+		/Users/rong/work/include/vtk-8.2/vtkVariant.h \
+		/Users/rong/work/include/vtk-8.2/vtkStdString.h \
+		/Users/rong/work/include/vtk-8.2/vtkUnicodeString.h \
+		/Users/rong/work/include/vtk-8.2/vtkVariantInlineOperators.h \
+		/Users/rong/work/include/vtk-8.2/vtkCellTypes.h \
+		/Users/rong/work/include/vtk-8.2/vtkIntArray.h \
+		/Users/rong/work/include/vtk-8.2/vtkAOSDataArrayTemplate.h \
+		/Users/rong/work/include/vtk-8.2/vtkGenericDataArray.h \
+		/Users/rong/work/include/vtk-8.2/vtkGenericDataArrayLookupHelper.h \
+		/Users/rong/work/include/vtk-8.2/vtkIdList.h \
+		/Users/rong/work/include/vtk-8.2/vtkGenericDataArray.txx \
+		/Users/rong/work/include/vtk-8.2/vtkVariantCast.h \
+		/Users/rong/work/include/vtk-8.2/vtkBuffer.h \
+		/Users/rong/work/include/vtk-8.2/vtkObjectFactory.h \
+		/Users/rong/work/include/vtk-8.2/vtkIdTypeArray.h \
+		/Users/rong/work/include/vtk-8.2/vtkUnsignedCharArray.h \
+		/Users/rong/work/include/vtk-8.2/vtkCellType.h \
+		/Users/rong/work/include/vtk-8.2/vtkCellLinks.h \
+		/Users/rong/work/include/vtk-8.2/vtkAbstractCellLinks.h \
+		/Users/rong/work/include/vtk-8.2/vtkCellArray.h \
+		/Users/rong/work/include/vtk-8.2/vtkCell.h \
+		/Users/rong/work/include/vtk-8.2/vtkNamedColors.h \
+		/Users/rong/work/include/vtk-8.2/vtkCommonColorModule.h \
+		/Users/rong/work/include/vtk-8.2/vtkStringArray.h \
+		/Users/rong/work/include/vtk-8.2/vtkPolyDataMapper.h \
+		/Users/rong/work/include/vtk-8.2/vtkMapper.h \
+		/Users/rong/work/include/vtk-8.2/vtkAbstractMapper3D.h \
+		/Users/rong/work/include/vtk-8.2/vtkAbstractMapper.h \
+		/Users/rong/work/include/vtk-8.2/vtkProperty.h \
+		/Users/rong/work/include/vtk-8.2/vtkRenderWindow.h \
+		/Users/rong/work/include/vtk-8.2/vtkWindow.h \
+		/Users/rong/work/include/vtk-8.2/vtkRenderer.h \
+		/Users/rong/work/include/vtk-8.2/vtkViewport.h \
+		/Users/rong/work/include/vtk-8.2/vtkVolumeCollection.h \
+		/Users/rong/work/include/vtk-8.2/vtkPropCollection.h \
+		/Users/rong/work/include/vtk-8.2/vtkCollection.h \
+		/Users/rong/work/include/vtk-8.2/vtkProp.h \
+		/Users/rong/work/include/vtk-8.2/vtkVolume.h \
+		/Users/rong/work/include/vtk-8.2/vtkProp3D.h \
+		/Users/rong/work/include/vtk-8.2/vtkActorCollection.h \
+		/Users/rong/work/include/vtk-8.2/vtkActor.h \
+		/Users/rong/work/include/vtk-8.2/vtkSphereSource.h \
+		/Users/rong/work/include/vtk-8.2/vtkTDxInteractorStyle.h \
+		/Users/rong/work/include/vtk-8.2/vtkTDxInteractorStyleSettings.h \
+		/Users/rong/work/include/vtk-8.2/vtkEventQtSlotConnect.h \
+		/Users/rong/work/include/vtk-8.2/vtkGenericOpenGLRenderWindow.h \
+		/Users/rong/work/include/vtk-8.2/vtkOpenGLRenderWindow.h \
+		/Users/rong/work/include/vtk-8.2/vtkDataObjectToTable.h \
+		/Users/rong/work/include/vtk-8.2/vtkInfovisCoreModule.h \
+		/Users/rong/work/include/vtk-8.2/vtkTableAlgorithm.h \
+		/Users/rong/work/include/vtk-8.2/vtkElevationFilter.h \
+		/Users/rong/work/include/vtk-8.2/vtkDataSetAlgorithm.h \
+		/Users/rong/work/include/vtk-8.2/vtkQtTableView.h \
+		/Users/rong/work/include/vtk-8.2/vtkViewsQtModule.h \
+		/Users/rong/work/include/vtk-8.2/vtkViewsCoreModule.h \
+		/Users/rong/work/include/vtk-8.2/vtkInteractionWidgetsModule.h \
+		/Users/rong/work/include/vtk-8.2/vtkFiltersGeneralModule.h \
+		/Users/rong/work/include/vtk-8.2/vtkViewsInfovisModule.h \
+		/Users/rong/work/include/vtk-8.2/vtkInteractionStyleModule.h \
+		/Users/rong/work/include/vtk-8.2/vtkRenderingContext2DModule.h \
+		/Users/rong/work/include/vtk-8.2/vtkQtView.h \
+		/Users/rong/work/include/vtk-8.2/vtkView.h \
 		/usr/local/Qt/5.12.6/lib/QtCore.framework/Headers/QPointer \
 		/usr/local/Qt/5.12.6/lib/QtCore.framework/Headers/qpointer.h \
-		../../../../include/vtk-8.2/vtkVectorText.h \
-		../../../../include/vtk-8.2/vtkVersion.h \
-		../../../../include/vtk-8.2/vtkTexture.h \
-		../../../../include/vtk-8.2/vtkBMPReader.h \
-		../../../../include/vtk-8.2/vtkIOImageModule.h \
-		../../../../include/vtk-8.2/vtkImageReader.h \
-		../../../../include/vtk-8.2/vtkImageReader2.h \
-		../../../../include/vtk-8.2/vtkAssembly.h \
-		../../../../include/vtk-8.2/vtkCylinderSource.h \
-		../../../../include/vtk-8.2/vtkTextSource.h \
-		../../../../include/vtk-8.2/vtkBoxWidget.h \
-		../../../../include/vtk-8.2/vtk3DWidget.h \
-		../../../../include/vtk-8.2/vtkInteractorObserver.h \
-		../../../../include/vtk-8.2/vtkInteractorStyleTrackballCamera.h \
-		../../../../include/vtk-8.2/vtkInteractorStyle.h \
-		../../../../include/vtk-8.2/vtkTransform.h \
-		../../../../include/vtk-8.2/vtkCommonTransformsModule.h \
-		../../../../include/vtk-8.2/vtkLinearTransform.h \
-		../../../../include/vtk-8.2/vtkHomogeneousTransform.h \
-		../../../../include/vtk-8.2/vtkAbstractTransform.h \
-		../../../../include/vtk-8.2/vtkMatrix4x4.h \
-		../../../../include/vtk-8.2/vtkCommonMathModule.h \
-		../../../../include/vtk-8.2/vtkCubeSource.h \
-		../../../../include/vtk-8.2/vtkAxesActor.h \
-		../../../../include/vtk-8.2/vtkRenderingAnnotationModule.h \
-		../../../../include/vtk-8.2/vtkCubeAxesActor.h \
-		../../../../include/vtk-8.2/vtkTextProperty.h \
-		../../../../include/vtk-8.2/QVTKOpenGLWidget.h \
-		../../../../include/vtk-8.2/vtkTextActor.h \
-		../../../../include/vtk-8.2/vtkTexturedActor2D.h \
-		../../../../include/vtk-8.2/vtkActor2D.h \
-		../../../../include/vtk-8.2/vtkCoordinate.h
+		/Users/rong/work/include/vtk-8.2/vtkVectorText.h \
+		/Users/rong/work/include/vtk-8.2/vtkVersion.h \
+		/Users/rong/work/include/vtk-8.2/vtkTexture.h \
+		/Users/rong/work/include/vtk-8.2/vtkBMPReader.h \
+		/Users/rong/work/include/vtk-8.2/vtkIOImageModule.h \
+		/Users/rong/work/include/vtk-8.2/vtkImageReader.h \
+		/Users/rong/work/include/vtk-8.2/vtkImageReader2.h \
+		/Users/rong/work/include/vtk-8.2/vtkAssembly.h \
+		/Users/rong/work/include/vtk-8.2/vtkCylinderSource.h \
+		/Users/rong/work/include/vtk-8.2/vtkTextSource.h \
+		/Users/rong/work/include/vtk-8.2/vtkBoxWidget.h \
+		/Users/rong/work/include/vtk-8.2/vtk3DWidget.h \
+		/Users/rong/work/include/vtk-8.2/vtkInteractorObserver.h \
+		/Users/rong/work/include/vtk-8.2/vtkInteractorStyleTrackballCamera.h \
+		/Users/rong/work/include/vtk-8.2/vtkInteractorStyle.h \
+		/Users/rong/work/include/vtk-8.2/vtkTransform.h \
+		/Users/rong/work/include/vtk-8.2/vtkCommonTransformsModule.h \
+		/Users/rong/work/include/vtk-8.2/vtkLinearTransform.h \
+		/Users/rong/work/include/vtk-8.2/vtkHomogeneousTransform.h \
+		/Users/rong/work/include/vtk-8.2/vtkAbstractTransform.h \
+		/Users/rong/work/include/vtk-8.2/vtkMatrix4x4.h \
+		/Users/rong/work/include/vtk-8.2/vtkCommonMathModule.h \
+		/Users/rong/work/include/vtk-8.2/vtkCubeSource.h \
+		/Users/rong/work/include/vtk-8.2/vtkAxesActor.h \
+		/Users/rong/work/include/vtk-8.2/vtkRenderingAnnotationModule.h \
+		/Users/rong/work/include/vtk-8.2/vtkCubeAxesActor.h \
+		/Users/rong/work/include/vtk-8.2/vtkTextProperty.h \
+		/Users/rong/work/include/vtk-8.2/QVTKOpenGLWidget.h \
+		/Users/rong/work/include/vtk-8.2/vtkTextActor.h \
+		/Users/rong/work/include/vtk-8.2/vtkTexturedActor2D.h \
+		/Users/rong/work/include/vtk-8.2/vtkActor2D.h \
+		/Users/rong/work/include/vtk-8.2/vtkCoordinate.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ../../release/App/plugin/vtkplugin.o vtkplugin.cpp
 
 ../../release/App/plugin/moc_vtkplugin.o: ../../release/App/plugin/moc_vtkplugin.cpp 

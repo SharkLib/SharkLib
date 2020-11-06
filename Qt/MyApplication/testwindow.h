@@ -21,6 +21,9 @@ public:
 public slots:
 	void slot_activeWindow();
 
+private slots:
+	void on_listWidget_currentRowChanged(int currentRow);
+
 private:
 	Ui::TestWindow *ui;
 };
