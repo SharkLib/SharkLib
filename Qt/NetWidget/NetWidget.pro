@@ -33,7 +33,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     ../MyApplication/myplugininterface.cpp \
-    chartplugin.cpp \
+    plugin.cpp \
     sslwebwidget.cpp
 
 HEADERS += \
